@@ -11,5 +11,6 @@ export type Post = {
     url: string;
   };
   content: string;
+  tags: string[];
   preview?: boolean;
 };
