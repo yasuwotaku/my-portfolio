@@ -36,7 +36,7 @@ export default function RootLayout({
 				<meta name="msapplication-config" content="/favicon/browserconfig.xml" />
 				<meta name="theme-color" content="#000" />
 				<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-				<script src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
+				<script async src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
 			</head>
 			<body className={cn(inter.className, "dark:bg-slate-900 dark:text-slate-400")}>
 				<ThemeSwitcher />

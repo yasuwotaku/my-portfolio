@@ -93,6 +93,8 @@ const Script = memo(() => (
 	/>
 ));
 
+Script.displayName = "NoFOUC_Script";
+
 /**
  * This component wich applies classes and transitions.
  */

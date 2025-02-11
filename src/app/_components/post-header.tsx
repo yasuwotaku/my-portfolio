@@ -21,7 +21,7 @@ export function PostHeader({ title, coverImage, date, author, tags }: Props) {
 			</div>
 			<ul className="flex gap-x-2">
 				{tags.map((tag) => (
-					<li className="font-bold mb-12">
+					<li key={tag} className="font-bold mb-12">
 						<a href={`/tags/${tag}`}>{tag}</a>
 					</li>
 				))}
