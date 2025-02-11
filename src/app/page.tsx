@@ -4,14 +4,14 @@ import { MoreStories } from "@/app/_components/more-stories";
 import { getAllPosts } from "@/lib/api";
 
 export default function Index() {
-  const allPosts = getAllPosts();
+	const allPosts = getAllPosts();
 
-  return (
-    <main>
-      <Container>
-        <Intro />
-        {allPosts.length > 0 && <MoreStories posts={allPosts} />}
-      </Container>
-    </main>
-  );
+	return (
+		<main>
+			<Container>
+				<Intro />
+				{allPosts.length > 0 && <MoreStories posts={allPosts} />}
+			</Container>
+		</main>
+	);
 }
