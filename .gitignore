@@ -41,3 +41,6 @@ next-env.d.ts
 
 # firabase
 .firebase
+
+# vscode
+.vscode
