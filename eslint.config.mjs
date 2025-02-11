@@ -4,7 +4,7 @@ import prettier from "eslint-config-prettier";
 
 const flatCompat = new FlatCompat();
 
-export default [
+const config = [
 	...fixupConfigRules(
 		flatCompat.extends("next/core-web-vitals"),
 		flatCompat.extends("next/typescript")
@@ -14,5 +14,15 @@ export default [
 		rules: {
 			"import/no-commonjs": "error",
 		},
+		overrides: [
+			{
+				files: ["*.config.cjs", "*.config.js"],
+				rules: {
+					"import/no-commonjs": "off",
+				},
+			},
+		],
 	},
 ];
+
+export default config;
