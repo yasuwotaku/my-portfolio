@@ -16,24 +16,40 @@ export function PostHeader({ title, coverImage, date, author, tags }: Props) {
 	return (
 		<>
 			<PostTitle>{title}</PostTitle>
-			<div className="hidden md:block md:mb-12">
+			<div
+				className={`
+					hidden
+					md:mb-12 md:block
+				`}
+			>
 				<Avatar name={author.name} picture={author.picture} />
 			</div>
-			<ul className="flex gap-x-2">
+			<ul className={`flex gap-x-2`}>
 				{tags.map((tag) => (
-					<li key={tag} className="font-bold mb-12">
+					<li key={tag} className={`mb-12 font-bold`}>
 						<a href={`/tags/${tag}`}>{tag}</a>
 					</li>
 				))}
 			</ul>
-			<div className="mb-8 md:mb-16 sm:mx-0">
+			<div
+				className={`
+					mb-8
+					md:mb-16
+					sm:mx-0
+				`}
+			>
 				<CoverImage title={title} src={coverImage} />
 			</div>
-			<div className="max-w-2xl mx-auto">
-				<div className="block md:hidden mb-6">
+			<div className={`mx-auto max-w-2xl`}>
+				<div
+					className={`
+						mb-6 block
+						md:hidden
+					`}
+				>
 					<Avatar name={author.name} picture={author.picture} />
 				</div>
-				<div className="mb-6 text-lg">
+				<div className={`mb-6 text-lg`}>
 					<DateFormatter dateString={date} />
 				</div>
 			</div>

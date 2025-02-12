@@ -18,17 +18,17 @@ export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
 			<div className="mb-5">
 				<CoverImage slug={slug} title={title} src={coverImage} />
 			</div>
-			<h3 className="text-3xl mb-3 leading-snug">
+			<h3 className={`mb-3 text-3xl leading-snug`}>
 				<Link href={`/posts/${slug}`} className="hover:underline">
 					{title}
 				</Link>
 			</h3>
-			<div className="text-lg mb-4">
+			<div className={`mb-4 text-lg`}>
 				<DateFormatter dateString={date} />
 			</div>
-			<ul className="flex gap-x-2">
+			<ul className={`flex gap-x-2`}>
 				{tags.map((tag) => (
-					<li key={tag} className="font-bold mb-12">
+					<li key={tag} className={`mb-12 font-bold`}>
 						<a href={`/tags/${tag}`}>{tag}</a>
 					</li>
 				))}
