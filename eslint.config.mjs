@@ -1,6 +1,7 @@
 import { FlatCompat } from "@eslint/eslintrc";
 import { fixupConfigRules } from "@eslint/compat";
 import prettier from "eslint-config-prettier";
+import readableTailwind from "eslint-plugin-readable-tailwind";
 
 const flatCompat = new FlatCompat();
 
@@ -14,14 +15,36 @@ const config = [
 		rules: {
 			"import/no-commonjs": "error",
 		},
-		overrides: [
-			{
-				files: ["*.config.cjs", "*.config.js"],
-				rules: {
-					"import/no-commonjs": "off",
+	},
+	{
+		files: ["**/*.{jsx,tsx}"],
+		languageOptions: {
+			parserOptions: {
+				ecmaFeatures: {
+					jsx: true,
 				},
 			},
-		],
+		},
+		plugins: {
+			"readable-tailwind": readableTailwind,
+		},
+		rules: {
+			...readableTailwind.configs.warning.rules,
+			"readable-tailwind/multiline": [
+				"warn",
+				{
+					printWidth: 0,
+					group: "newLine",
+					indent: "tab",
+				},
+			],
+		},
+	},
+	{
+		files: ["*.config.cjs", "*.config.js"],
+		rules: {
+			"import/no-commonjs": "off",
+		},
 	},
 ];
 

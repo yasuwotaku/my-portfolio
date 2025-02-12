@@ -1477,6 +1477,11 @@ eslint-plugin-react@^7.37.0, eslint-plugin-react@^7.37.4:
     string.prototype.matchall "^4.0.12"
     string.prototype.repeat "^1.0.0"
 
+eslint-plugin-readable-tailwind@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-readable-tailwind/-/eslint-plugin-readable-tailwind-1.9.0.tgz#b1efdd8a72ebeac932e55c67ed94b137e0bc4800"
+  integrity sha512-GrAAVpnii49FdC3YeJ7jy3mTwgPuHVJB2JpV4zLfJGWFNcxKJTz8qs3/vpixedq/LnQ1eN2IY+h+IN91g7D9HA==
+
 eslint-scope@^8.2.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-8.2.0.tgz#377aa6f1cb5dc7592cfd0b7f892fd0cf352ce442"
