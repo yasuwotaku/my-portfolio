@@ -8,12 +8,11 @@ type Props = {
 	title: string;
 	coverImage: string;
 	date: string;
-	excerpt: string;
-	author: Author;
 	slug: string;
+	tags: string[];
 };
 
-export function PostPreview({ title, coverImage, date, excerpt, author, slug }: Props) {
+export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
 	return (
 		<div>
 			<div className="mb-5">
@@ -27,8 +26,13 @@ export function PostPreview({ title, coverImage, date, excerpt, author, slug }: 
 			<div className="text-lg mb-4">
 				<DateFormatter dateString={date} />
 			</div>
-			<p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-			<Avatar name={author.name} picture={author.picture} />
+			<ul className="flex gap-x-2">
+				{tags.map((tag) => (
+					<li key={tag} className="font-bold mb-12">
+						<a href={`/tags/${tag}`}>{tag}</a>
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 }
