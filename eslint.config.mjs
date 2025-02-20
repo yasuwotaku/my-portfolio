@@ -33,6 +33,7 @@ const config = [
 			"readable-tailwind/multiline": [
 				"warn",
 				{
+					printWidth: 200,
 					group: "newLine",
 					indent: "tab",
 				},
