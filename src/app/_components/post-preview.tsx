@@ -1,8 +1,8 @@
-import { type Author } from "@/interfaces/author";
 import Link from "next/link";
-import Avatar from "./avatar";
 import CoverImage from "./cover-image";
 import DateFormatter from "./date-formatter";
+import { Tags } from "./tags";
+import SquareImage from "./square-image";
 
 type Props = {
 	title: string;
@@ -15,24 +15,22 @@ type Props = {
 export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
 	return (
 		<div>
-			<div className="mb-5">
-				<CoverImage slug={slug} title={title} src={coverImage} />
+			<div>
+				<SquareImage slug={slug} title={title} src={coverImage} />
 			</div>
-			<h3 className={`mb-3 text-3xl leading-snug`}>
-				<Link href={`/posts/${slug}`} className="hover:underline">
-					{title}
-				</Link>
-			</h3>
-			<div className={`mb-4 text-lg`}>
-				<DateFormatter dateString={date} />
+			<div>
+				<div>
+					<h3>
+						<Link href={`/posts/${slug}`} className="hover:underline">
+							{title}
+						</Link>
+					</h3>
+					<DateFormatter dateString={date} />
+				</div>
+				<div>
+					<Tags tags={tags} />
+				</div>
 			</div>
-			<ul className={`flex gap-x-2`}>
-				{tags.map((tag) => (
-					<li key={tag} className={`mb-12 font-bold`}>
-						<a href={`/tags/${tag}`}>{tag}</a>
-					</li>
-				))}
-			</ul>
 		</div>
 	);
 }

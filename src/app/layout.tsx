@@ -1,3 +1,4 @@
+import NavigationBar from "@/app/_components/navigation-bar";
 import Footer from "@/app/_components/footer";
 import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
@@ -23,7 +24,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="ja">
 			<head>
 				<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
 				<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
@@ -37,8 +38,9 @@ export default function RootLayout({
 				<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
 				<script async src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
 			</head>
-			<body className={cn(inter.className, "dark:bg-slate-900 dark:text-slate-400")}>
-				<div className="min-h-screen">{children}</div>
+			<body className={cn(inter.className, `flex min-h-screen flex-col`)}>
+				<NavigationBar />
+				<div className="flex-auto">{children}</div>
 				<Footer />
 			</body>
 		</html>

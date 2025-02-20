@@ -8,20 +8,19 @@ type Props = {
 	slug?: string;
 };
 
-const CoverImage = ({ title, src, slug }: Props) => {
+const SquareImage = ({ title, src, slug }: Props) => {
 	const image = (
 		<Image
+			fill
 			src={src}
 			alt={`Cover Image for ${title}`}
-			className={cn(`w-full`, {
+			className={cn(`object-cover`, {
 				"transition-shadow duration-200": slug,
 			})}
-			width={1300}
-			height={630}
 		/>
 	);
 	return (
-		<div className="sm:mx-0">
+		<div className="relative h-full w-full">
 			{slug ? (
 				<Link href={`/posts/${slug}`} aria-label={title}>
 					{image}
@@ -33,4 +32,4 @@ const CoverImage = ({ title, src, slug }: Props) => {
 	);
 };
 
-export default CoverImage;
+export default SquareImage;

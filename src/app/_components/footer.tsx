@@ -1,60 +1,47 @@
-import Container from "@/app/_components/container";
-import { EXAMPLE_PATH } from "@/lib/constants";
+import { Typography } from "@material-tailwind/react";
+import { Breadcrumb, BreadcrumbLink, BreadcrumbSeparator } from "@material-tailwind/react";
+import { HomeSimple } from "iconoir-react";
+
+const YEAR = new Date().getFullYear();
+
+const LINKS = [
+	{
+		title: "About Us",
+		href: "#",
+	},
+	{
+		title: "License",
+		href: "#",
+	},
+	{
+		title: "Contribute",
+		href: "#",
+	},
+	{
+		title: "Contact Us",
+		href: "#",
+	},
+];
 
 export function Footer() {
 	return (
 		<footer
 			className={`
-				border-t border-neutral-200 bg-neutral-50
-				dark:bg-slate-800
+				flex w-full flex-row flex-wrap items-center justify-center gap-x-12 gap-y-3 border-t border-surface py-4 text-center
+				md:justify-between
 			`}
 		>
-			<Container>
-				<div
-					className={`
-						flex flex-col items-center py-12s
-						lg:flex-row
-					`}
-				>
-					<h3
-						className={`
-							mb-10 text-center text-2xl font-bold leading-tight tracking-tighter
-							lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-[1.5rem]
-						`}
-					>
-						Statically Generated with Next.js.
-					</h3>
-					<div
-						className={`
-							flex flex-col items-center justify-center
-							lg:w-1/2 lg:flex-row lg:pl-4
-						`}
-					>
-						<a
-							href="https://nextjs.org/docs/app/building-your-application/routing/layouts-and-templates"
-							className={`
-								mx-3 mb-6 border border-black bg-black px-12 py-3 font-bold text-white
-								transition-colors duration-200
-								hover:bg-white hover:text-black
-								lg:mb-0 lg:px-8
-							`}
-						>
-							Read Documentation
-						</a>
-						<a
-							href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-							className={`
-								mx-3 font-bold
-								hover:underline
-							`}
-						>
-							View on GitHub
-						</a>
-					</div>
-				</div>
-			</Container>
+			<Typography type="small">&copy;yasuworks.com, 2024-{YEAR}</Typography>
+			<Breadcrumb>
+				<BreadcrumbLink href="/">
+					<HomeSimple className="h-[18px] w-[18px]" />
+				</BreadcrumbLink>
+				<BreadcrumbSeparator />
+				<BreadcrumbLink href="posts">Posts</BreadcrumbLink>
+				<BreadcrumbSeparator />
+				<BreadcrumbLink href="about">About</BreadcrumbLink>
+			</Breadcrumb>
 		</footer>
 	);
 }
-
 export default Footer;
