@@ -4,25 +4,6 @@ import { HomeSimple } from "iconoir-react";
 
 const YEAR = new Date().getFullYear();
 
-const LINKS = [
-	{
-		title: "About Us",
-		href: "#",
-	},
-	{
-		title: "License",
-		href: "#",
-	},
-	{
-		title: "Contribute",
-		href: "#",
-	},
-	{
-		title: "Contact Us",
-		href: "#",
-	},
-];
-
 export function Footer() {
 	return (
 		<footer
@@ -31,7 +12,6 @@ export function Footer() {
 				md:justify-between
 			`}
 		>
-			<Typography type="small">&copy;yasuworks.com, 2024-{YEAR}</Typography>
 			<Breadcrumb>
 				<BreadcrumbLink href="/">
 					<HomeSimple className="h-[18px] w-[18px]" />
@@ -41,6 +21,7 @@ export function Footer() {
 				<BreadcrumbSeparator />
 				<BreadcrumbLink href="about">About</BreadcrumbLink>
 			</Breadcrumb>
+			<Typography type="small">&copy;yasuworks.com, 2024-{YEAR}</Typography>
 		</footer>
 	);
 }
