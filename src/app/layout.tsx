@@ -1,4 +1,4 @@
-import NavigationBar from "@/app/_components/navigation-bar";
+import NavBar from "@/app/_components/nav-bar";
 import Footer from "@/app/_components/footer";
 import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
@@ -39,7 +39,7 @@ export default function RootLayout({
 				<script async src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
 			</head>
 			<body className={cn(inter.className, `flex min-h-screen flex-col`)}>
-				<NavigationBar />
+				<NavBar />
 				<div className="flex-auto">{children}</div>
 				<Footer />
 			</body>
