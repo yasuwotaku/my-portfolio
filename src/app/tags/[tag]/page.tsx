@@ -1,7 +1,6 @@
 import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
 import { TagHeader } from "@/app/_components/tag-header";
-import { MoreStories } from "@/app/_components/more-stories";
+import { Posts } from "@/app/_components/posts";
 import { getAllTags, getPostsByTag } from "@/lib/api";
 
 export default async function Post(props: Params) {
@@ -11,9 +10,8 @@ export default async function Post(props: Params) {
 	return (
 		<main>
 			<Container>
-				<Header />
 				<TagHeader tag={params.tag} />
-				{posts.length > 0 && <MoreStories posts={posts} />}
+				{posts.length > 0 && <Posts posts={posts} />}
 			</Container>
 		</main>
 	);
