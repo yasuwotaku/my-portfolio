@@ -1,9 +1,6 @@
 "use client";
 
 import { Typography } from "@material-tailwind/react";
-import classNames from "classnames";
-import { Label } from "iconoir-react";
-import Link from "next/link";
 import cn from "classnames";
 import { useSelectedLayoutSegment } from "next/navigation";
 
@@ -35,7 +32,7 @@ export default function NavBarMenu() {
 	}));
 
 	return (
-		<ul className="flex items-center gap-1">
+		<ul className={`flex items-center gap-1`}>
 			{items.map((item, i) => (
 				<li key={`menu-item-${i}`} className={`relative text-sm text-muted-foreground`}>
 					<Typography
