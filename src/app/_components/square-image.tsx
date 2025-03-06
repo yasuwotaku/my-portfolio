@@ -20,7 +20,7 @@ const SquareImage = ({ title, src, slug }: Props) => {
 		/>
 	);
 	return (
-		<div className="relative h-full w-full">
+		<div className="relative aspect-square w-full">
 			{slug ? (
 				<Link href={`/posts/${slug}`} aria-label={title}>
 					{image}

@@ -8,7 +8,13 @@ type Props = {
 export function Posts({ posts }: Props) {
 	return (
 		<section>
-			<div>
+			<div
+				className={`
+					grid grid-cols-1
+					md:grid-cols-3
+					sm:grid-cols-2
+				`}
+			>
 				{posts.map((post) => (
 					<PostPreview
 						key={post.slug}
