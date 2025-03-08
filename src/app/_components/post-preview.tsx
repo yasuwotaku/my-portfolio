@@ -3,6 +3,7 @@ import CoverImage from "./cover-image";
 import DateFormatter from "./date-formatter";
 import { Tags } from "./tags";
 import SquareImage from "./square-image";
+import { Typography } from "@material-tailwind/react";
 
 type Props = {
 	title: string;
@@ -14,23 +15,22 @@ type Props = {
 
 export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
 	return (
-		<div>
-			<div>
-				<SquareImage slug={slug} title={title} src={coverImage} />
-			</div>
-			<div>
-				<div>
-					<h3>
-						<Link href={`/posts/${slug}`} className="hover:underline">
-							{title}
-						</Link>
-					</h3>
-					<DateFormatter dateString={date} />
-				</div>
-				<div>
-					<Tags tags={tags} />
-				</div>
-			</div>
+		<div className="flex flex-col p-4">
+			<SquareImage slug={slug} title={title} src={coverImage} />
+			<Typography type="small" className="font-bold">
+				<DateFormatter dateString={date} />
+			</Typography>
+			<Typography
+				as="a"
+				href={`/posts/${slug}`}
+				className={`
+					line-clamp-2 h-12
+					hover:underline
+				`}
+			>
+				{title}
+			</Typography>
+			<Tags tags={tags} />
 		</div>
 	);
 }

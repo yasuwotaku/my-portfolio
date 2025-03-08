@@ -1,17 +1,45 @@
-import { Typography } from "@material-tailwind/react";
+"use client";
+
 import NavBarMenu from "./nav-bar-menu";
+import React, { useState } from "react";
+import HamburgerMenu from "./hamburger";
+import Logo from "./logo";
 
 const NavBar = () => {
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	const toggleMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
+
 	return (
-		<header className="sticky top-0 z-10 flex h-20 flex-row content-center items-center justify-between p-2 backdrop-blur-md">
-			<Typography
-				as="a"
-				href="/"
-				className="ml-2 mr-2 inline py-1 text-2xl font-light tracking-tighter underline"
+		<header
+			className={`
+				sticky top-0 z-10 grid items-center p-2 align-middle backdrop-blur-md
+				sm:grid-flow-col sm:justify-between
+			`}
+		>
+			<div className={`flex w-full items-center justify-between`}>
+				<div className={`sm:hidden`}>
+					<HamburgerMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+				</div>
+				<Logo />
+				<div
+					className={`
+						w-10
+						sm:hidden
+					`}
+				></div>
+			</div>
+			<div
+				className={`
+					w-full place-items-center justify-center
+					sm:flex sm:flex-auto sm:justify-end
+					${isMenuOpen ? "block" : "hidden"}
+				`}
 			>
-				<strong className="font-black">yasuworks</strong>.com
-			</Typography>
-			<NavBarMenu />
+				<NavBarMenu />
+			</div>
 		</header>
 	);
 };

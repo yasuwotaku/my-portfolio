@@ -3,6 +3,7 @@ import DateFormatter from "./date-formatter";
 import { PostTitle } from "@/app/_components/post-title";
 import { type Author } from "@/interfaces/author";
 import { Tags } from "./tags";
+import { Typography } from "@material-tailwind/react";
 
 type Props = {
 	title: string;
@@ -14,17 +15,15 @@ type Props = {
 
 export function PostHeader({ title, coverImage, date, author, tags }: Props) {
 	return (
-		<>
+		<div className="mx-auto max-w-2xl">
+			<Typography type="small" className="font-bold">
+				<DateFormatter dateString={date} />
+			</Typography>
 			<PostTitle>{title}</PostTitle>
-			<Tags tags={tags} />
-			<div>
-				<CoverImage title={title} src={coverImage} />
+			<div className="h-12 content-center">
+				<Tags tags={tags} />
 			</div>
-			<div className={`mx-auto max-w-2xl`}>
-				<div className={`mb-6 text-lg`}>
-					<DateFormatter dateString={date} />
-				</div>
-			</div>
-		</>
+			<CoverImage title={title} src={coverImage} />
+		</div>
 	);
 }

@@ -1,4 +1,4 @@
-import { Button } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 
 type Props = {
 	tags: string[];
@@ -17,7 +17,9 @@ export function Tags({ tags }: Props) {
 					variant="outline"
 					className="shadow-none"
 				>
-					{tag}
+					<Typography type="small" className="font-black">
+						{tag}
+					</Typography>
 				</Button>
 			))}
 		</div>
