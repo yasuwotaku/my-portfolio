@@ -7,7 +7,10 @@ import { Typography } from "@material-tailwind/react";
 
 type Props = {
 	title: string;
-	coverImage: string;
+	coverImage: {
+		url: string;
+		alt: string;
+	};
 	date: string;
 	slug: string;
 	tags: string[];
@@ -16,7 +19,7 @@ type Props = {
 export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
 	return (
 		<div className="flex flex-col p-4">
-			<SquareImage slug={slug} title={title} src={coverImage} />
+			<SquareImage slug={slug} title={title} src={coverImage.url} alt={coverImage.alt} />
 			<Typography type="small" className="font-bold">
 				<DateFormatter dateString={date} />
 			</Typography>

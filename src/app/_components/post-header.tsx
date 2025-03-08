@@ -7,7 +7,10 @@ import { Typography } from "@material-tailwind/react";
 
 type Props = {
 	title: string;
-	coverImage: string;
+	coverImage: {
+		url: string;
+		alt: string;
+	};
 	date: string;
 	author: Author;
 	tags: string[];
@@ -23,7 +26,7 @@ export function PostHeader({ title, coverImage, date, author, tags }: Props) {
 			<div className="h-12 content-center">
 				<Tags tags={tags} />
 			</div>
-			<CoverImage title={title} src={coverImage} />
+			{coverImage?.url && <CoverImage title={title} src={coverImage.url} />}
 		</div>
 	);
 }
