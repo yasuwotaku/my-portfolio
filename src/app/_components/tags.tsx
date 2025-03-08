@@ -1,4 +1,5 @@
 import { Button, Typography } from "@material-tailwind/react";
+import { Hashtag } from "iconoir-react";
 
 type Props = {
 	tags: string[];
@@ -17,6 +18,7 @@ export function Tags({ tags }: Props) {
 					variant="outline"
 					className="shadow-none"
 				>
+					<Hashtag className="w-3.5 mr-1" />
 					<Typography type="small" className="font-black">
 						{tag}
 					</Typography>
