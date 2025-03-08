@@ -1,5 +1,3 @@
-import Link from "next/link";
-import CoverImage from "./cover-image";
 import DateFormatter from "./date-formatter";
 import { Tags } from "./tags";
 import SquareImage from "./square-image";
@@ -18,7 +16,7 @@ type Props = {
 
 export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
 	return (
-		<div className="flex flex-col p-4">
+		<div className="flex flex-col p-4 gap-1">
 			<SquareImage slug={slug} title={title} src={coverImage.url} alt={coverImage.alt} />
 			<Typography type="small" className="font-bold">
 				<DateFormatter dateString={date} />
