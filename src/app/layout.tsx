@@ -1,6 +1,6 @@
 import NavBar from "@/app/_components/nav-bar";
 import Footer from "@/app/_components/footer";
-import { SITE_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
+import { SITE_NAME, SITE_DESCRIPTION, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: SITE_NAME,
-	description: `A statically generated blog example using Next.js and Markdown.`,
+	description: SITE_DESCRIPTION,
 	openGraph: {
 		images: [HOME_OG_IMAGE_URL],
 	},
