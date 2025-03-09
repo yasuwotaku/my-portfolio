@@ -7,7 +7,7 @@ type Props = {
 
 export function Tags({ tags }: Props) {
 	return (
-		<div className="flex gap-x-2 overflow-x-auto">
+		<div className="flex gap-x-1 overflow-x-auto">
 			{tags.map((tag) => (
 				<Link
 					key={tag}
