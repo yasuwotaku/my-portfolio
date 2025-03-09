@@ -16,21 +16,18 @@ const SquareImage = ({ title, src, alt, slug }: Props) => {
 			src={src}
 			alt={`Cover Image for ${title}`}
 			className={cn(`object-cover`, {
-				"grayscale transition-shadow duration-200": slug,
+				"transition-shadow duration-200": slug,
 			})}
 		/>
 	) : (
 		<div
-			className={`
-                flex h-full w-full items-center justify-center
-                bg-gray-200 text-gray-500 grayscale text-5xl
-              `}
+			className={`flex h-full w-full items-center justify-center bg-gray-200 text-5xl text-gray-500`}
 		>
 			<span className="break-all">{alt}</span>
 		</div>
 	);
 	return (
-		<div className="relative aspect-square w-full drop-shadow">
+		<div className="relative aspect-square w-full drop-shadow grayscale hover:grayscale-0 transition-all duration-300">
 			{slug ? (
 				<Link href={`/posts/${slug}`} aria-label={title}>
 					{image}

@@ -1,4 +1,3 @@
-import { Typography } from "@material-tailwind/react";
 import { ReactNode } from "react";
 
 type Props = {
@@ -6,5 +5,5 @@ type Props = {
 };
 
 export function PostTitle({ children }: Props) {
-	return <Typography type="h2">{children}</Typography>;
+	return <h2 className="text-3xl">{children}</h2>;
 }

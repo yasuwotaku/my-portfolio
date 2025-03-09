@@ -1,7 +1,7 @@
 "use client";
 
-import { Typography } from "@material-tailwind/react";
 import cn from "classnames";
+import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 const menuItems = [
@@ -35,10 +35,9 @@ export default function NavBarMenu() {
 		<ul className={`flex items-center gap-1`}>
 			{items.map((item, i) => (
 				<li key={`menu-item-${i}`} className={`relative text-sm text-muted-foreground`}>
-					<Typography
-						as="a"
+					<Link
 						href={`/${item.segment == "#" ? "" : item.segment}`}
-						className={cn(`group inline-block rounded px-4 py-2`, {
+						className={cn(`group inline-block rounded px-4 py-2 text-lg`, {
 							"font-bold": item.isActive,
 						})}
 					>
@@ -50,7 +49,7 @@ export default function NavBarMenu() {
 								group-hover:w-full
 							`}
 						></div>
-					</Typography>
+					</Link>
 				</li>
 			))}
 		</ul>

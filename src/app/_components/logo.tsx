@@ -1,14 +1,10 @@
-import { Typography } from "@material-tailwind/react";
+import Link from "next/link";
 
 export function Logo() {
 	return (
-		<Typography
-			as="a"
-			href="/"
-			className={`p-2 text-center text-2xl font-light tracking-tighter underline`}
-		>
+		<Link href="/" className={`p-2 text-center text-2xl font-light tracking-tighter underline`}>
 			<strong className="font-black">yasuworks</strong>.com
-		</Typography>
+		</Link>
 	);
 }
 export default Logo;
