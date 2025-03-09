@@ -1,6 +1,6 @@
 import Container from "@/app/_components/container";
 
-export default async function Tags(props: Params) {
+export default async function Index(props: Params) {
 	return (
 		<main>
 			<Container></Container>

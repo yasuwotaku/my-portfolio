@@ -2,7 +2,6 @@ import CoverImage from "./cover-image";
 import DateFormatter from "./date-formatter";
 import { PostTitle } from "@/app/_components/post-title";
 import { Tags } from "./tags";
-import Link from "next/link";
 
 type Props = {
 	title: string;

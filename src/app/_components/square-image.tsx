@@ -27,7 +27,12 @@ const SquareImage = ({ title, src, alt, slug }: Props) => {
 		</div>
 	);
 	return (
-		<div className="relative aspect-square w-full drop-shadow grayscale hover:grayscale-0 transition-all duration-300">
+		<div
+			className={`
+				relative aspect-square w-full drop-shadow grayscale transition-all duration-300
+				hover:grayscale-0
+			`}
+		>
 			{slug ? (
 				<Link href={`/posts/${slug}`} aria-label={title}>
 					{image}

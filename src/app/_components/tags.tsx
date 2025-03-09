@@ -13,7 +13,7 @@ export function Tags({ tags }: Props) {
 					key={tag}
 					href={`/tags/${tag}`}
 					className={`
-						bg-white flex flex-row m-1 px-1 text-sm font-black outline rounded-full transition-colors
+						m-1 flex flex-row rounded-full bg-white px-1 text-sm font-black outline transition-colors
 						hover:bg-gray-300
 					`}
 				>

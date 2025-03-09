@@ -3,7 +3,7 @@ import { TagHeader } from "@/app/_components/tag-header";
 import { Posts } from "@/app/_components/posts";
 import { getAllTags, getPostsByTag } from "@/lib/api";
 
-export default async function Post(props: Params) {
+export default async function TaggedPosts(props: Params) {
 	const params = await props.params;
 	const posts = getPostsByTag(params.tag);
 
