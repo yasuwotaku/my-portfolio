@@ -3,7 +3,9 @@ import Container from "@/app/_components/container";
 export default async function About(props: Params) {
 	return (
 		<main>
-			<Container></Container>
+			<Container>
+				<div className="w-full text-center font-black">coming soon...</div>
+			</Container>
 		</main>
 	);
 }
