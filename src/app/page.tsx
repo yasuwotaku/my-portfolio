@@ -1,5 +1,5 @@
-import Container from "@/app/_components/container";
-import { Posts } from "@/app/_components/posts";
+import Container from "@/components/container";
+import { Posts } from "@/components/posts";
 import { getAllPosts } from "@/lib/api";
 
 export default function Index() {

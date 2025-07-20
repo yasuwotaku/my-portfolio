@@ -1,4 +1,4 @@
-import Container from "@/app/_components/container";
+import Container from "@/components/container";
 
 export default async function About(props: Params) {
 	return (
