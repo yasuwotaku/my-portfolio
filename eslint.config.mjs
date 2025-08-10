@@ -1,51 +1,18 @@
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
-import { fixupConfigRules } from "@eslint/compat";
-import prettier from "eslint-config-prettier";
-import readableTailwind from "eslint-plugin-readable-tailwind";
+import tailwind from "eslint-plugin-tailwindcss";
 
-const flatCompat = new FlatCompat();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const config = [
-	...fixupConfigRules(
-		flatCompat.extends("next/core-web-vitals"),
-		flatCompat.extends("next/typescript")
-	),
-	prettier,
-	{
-		rules: {
-			"import/no-commonjs": "error",
-		},
-	},
-	{
-		files: ["**/*.{jsx,tsx}"],
-		languageOptions: {
-			parserOptions: {
-				ecmaFeatures: {
-					jsx: true,
-				},
-			},
-		},
-		plugins: {
-			"readable-tailwind": readableTailwind,
-		},
-		rules: {
-			...readableTailwind.configs.warning.rules,
-			"readable-tailwind/multiline": [
-				"warn",
-				{
-					printWidth: 200,
-					group: "newLine",
-					indent: "tab",
-				},
-			],
-		},
-	},
-	{
-		files: ["*.config.cjs", "*.config.js"],
-		rules: {
-			"import/no-commonjs": "off",
-		},
-	},
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...tailwind.configs["flat/recommended"],
 ];
 
-export default config;
+export default eslintConfig;
