@@ -1,18 +1,25 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig, globalIgnores } from "eslint/config";
+import { fixupConfigRules } from "@eslint/compat";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 import tailwind from "eslint-plugin-tailwindcss";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  ...tailwind.configs["flat/recommended"],
-];
+const eslintConfig = defineConfig([
+  ...fixupConfigRules([...nextVitals, ...nextTs]),
+  tailwind.configs.recommended,
+  {
+    settings: {
+      tailwindcss: {
+        cssConfigPath: "./src/styles/globals.css",
+      },
+    },
+  },
+  globalIgnores([
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
 
 export default eslintConfig;

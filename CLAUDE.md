@@ -4,16 +4,17 @@
 
 ## スタック
 
-- Next.js 15 (App Router) / React 19 / TypeScript
+- Next.js 16 (App Router) / React 19 / TypeScript
 - Tailwind CSS v4 (`@tailwindcss/postcss`)
 - `output: "export"` の静的サイト → `out/` を Firebase Hosting にデプロイ
-- パッケージマネージャ: Yarn (Berry)。npm / pnpm は使わない
+- パッケージマネージャ: pnpm。npm / yarn は使わない
+  - pnpm の `minimumReleaseAge`（公開から 1 日未満のバージョンは入れない）はサプライチェーン対策なので、除外設定を足して回避しない
 
 ## コマンド
 
-- `yarn dev` — 開発サーバー (turbopack)
-- `yarn build` — 静的ビルド（`out/` に出力）。変更後の動作確認はまずこれ
-- `yarn lint` — ESLint
+- `pnpm dev` — 開発サーバー
+- `pnpm build` — 静的ビルド（`out/` に出力）。変更後の動作確認はまずこれ
+- `pnpm lint` — ESLint
 
 ## 構成
 
@@ -45,7 +46,7 @@
    - 長い指示はスクラッチパッドにファイルで書き、`"$(cat path/to/prompt.md)"` で渡す
    - 指示には「git コマンドは実行しない」「対象外のファイルは変更しない」を含める
    - 続きの指示は `-c`（直前の会話を継続）を使う
-3. Claude が `git diff` と `yarn build` / `yarn lint` で結果を確認し、問題があれば修正指示を再度 `agy` に投げる
+3. Claude が `git diff` と `pnpm build` / `pnpm lint` で結果を確認し、問題があれば修正指示を再度 `agy` に投げる
 4. ユーザーに結果を報告する
 
 ### 方針

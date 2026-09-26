@@ -1,5 +1,3 @@
-import markdownStyles from "@/styles/markdown-styles.module.css";
-
 type Props = {
 	content: string;
 };
@@ -7,10 +5,7 @@ type Props = {
 export function PostBody({ content }: Props) {
 	return (
 		<div className="mx-auto max-w-2xl znc">
-			<div
-				className={markdownStyles["markdown"]}
-				dangerouslySetInnerHTML={{ __html: content }}
-			/>
+			<div dangerouslySetInnerHTML={{ __html: content }} />
 		</div>
 	);
 }

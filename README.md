@@ -4,21 +4,21 @@ yasuwotaku の個人サイト兼ブログ（ https://yasuworks.com ）のソー�
 
 ## 技術スタック
 
-- Next.js 15 (App Router)
+- Next.js 16 (App Router)
 - React 19
 - TypeScript
 - Tailwind CSS v4
 - zenn-markdown-html / gray-matter
 - Firebase Hosting
-- Yarn
+- pnpm
 
 ## 開発コマンド
 
 ```bash
-yarn install  # 依存関係のインストール
-yarn dev      # 開発サーバー起動
-yarn build    # 静的ビルド（out/ に出力）
-yarn lint     # リント
+pnpm install  # 依存関係のインストール
+pnpm dev      # 開発サーバー起動
+pnpm build    # 静的ビルド（out/ に出力）
+pnpm lint     # リント
 ```
 
 ## 記事の追加
