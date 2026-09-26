@@ -15,10 +15,11 @@ yasuwotaku の個人サイト兼ブログ（ https://yasuworks.com ）のソー�
 ## 開発コマンド
 
 ```bash
-pnpm install  # 依存関係のインストール
-pnpm dev      # 開発サーバー起動
-pnpm build    # 静的ビルド（out/ に出力）
-pnpm lint     # リント
+pnpm install   # 依存関係のインストール
+pnpm dev       # 開発サーバー起動
+pnpm build     # 静的ビルド（out/ に出力）
+pnpm lint      # リント
+pnpm typecheck # 型チェック（tsgo）
 ```
 
 ## 記事の追加

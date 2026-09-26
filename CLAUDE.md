@@ -10,11 +10,17 @@
 - パッケージマネージャ: pnpm。npm / yarn は使わない
   - pnpm の `minimumReleaseAge`（公開から 1 日未満のバージョンは入れない）はサプライチェーン対策なので、除外設定を足して回避しない
 
+## TypeScript
+
+- `typescript` は 6 系（Next.js と typescript-eslint が使う）。7 系は typescript-eslint が未対応のため上げない
+- 型チェックの高速化用に `@typescript/native-preview`（tsgo）を併用している
+
 ## コマンド
 
 - `pnpm dev` — 開発サーバー
 - `pnpm build` — 静的ビルド（`out/` に出力）。変更後の動作確認はまずこれ
 - `pnpm lint` — ESLint
+- `pnpm typecheck` — tsgo（TypeScript 7 ネイティブ版）による高速な型チェック
 
 ## 構成
 
