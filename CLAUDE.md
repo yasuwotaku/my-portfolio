@@ -29,10 +29,10 @@
 - `src/components/layout/` — レイアウトコンポーネント
 - `src/components/post/` — 記事関連コンポーネント
 - `src/components/tag/` — タグ関連コンポーネント
-- `src/lib/posts.ts` — 記事の読み込み・一覧取得
+- `src/lib/posts.ts` — 記事の読み込み・一覧・タグ取得（モジュールレベルでキャッシュ）
 - `src/lib/markdown.ts` — Markdown → HTML
 - `src/lib/site.ts` — サイト共通定数
-- `src/types/post.ts` — Post 型
+- `src/types/post.ts` — Post 型・front matter の Zod スキーマ
 
 ## デプロイ
 

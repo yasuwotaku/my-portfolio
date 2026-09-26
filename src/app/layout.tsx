@@ -1,6 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { NavBar } from "@/components/layout/nav-bar";
-import { HOME_OG_IMAGE_URL, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
+import { HOME_OG_IMAGE_PATH, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
@@ -11,10 +11,11 @@ import "@/styles/globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+	metadataBase: new URL(SITE_URL),
 	title: SITE_NAME,
 	description: SITE_DESCRIPTION,
 	openGraph: {
-		images: [HOME_OG_IMAGE_URL],
+		images: [HOME_OG_IMAGE_PATH],
 	},
 };
 
