@@ -60,6 +60,7 @@
   - 例: `feature/about-page`, `bugfix/tag-link`, `chore/update-readme`
 - コミットメッセージは Conventional Commits 形式、説明は日本語（例: `feat: About ページを追加`）
   - type: `feat` / `fix` / `refactor` / `docs` / `style` / `chore`、記事の追加は `post`
+  - Claude（agy 経由の作業も含む）がコミットするときは、末尾に `Co-Authored-By: Claude <noreply@anthropic.com>` 形式の trailer を必ず付ける
 - ブランチ・コミット・push・PR 作成までは Claude が行う（git 操作は agy にやらせない）
 - PR は squash merge。マージはユーザーが行う
 - PR を作る・push するたびに Firebase のプレビューチャンネルにデプロイされる（URL は PR にコメントされ、7 日で失効）。見た目の確認はそこで行う
