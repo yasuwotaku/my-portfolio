@@ -55,9 +55,11 @@
 
 ## Git 運用
 
-- 作業ごとに `main` からブランチを切る。命名は `<type>/<短い説明>`（例: `feat/about-page`, `fix/tag-link`）。type はコミットと同じもの
+- 作業ごとに `main` からブランチを切る。命名は [Conventional Branch](https://conventional-branch.github.io/) に従う: `<type>/<説明>`（小文字・ハイフン区切り）
+  - `feature/` 機能追加、`bugfix/` バグ修正、`hotfix/` 緊急修正、`release/` リリース準備、`chore/` それ以外（リファクタリング、ドキュメント、依存更新など）
+  - 例: `feature/about-page`, `bugfix/tag-link`, `chore/update-readme`
 - コミットメッセージは Conventional Commits 形式、説明は日本語（例: `feat: About ページを追加`）
   - type: `feat` / `fix` / `refactor` / `docs` / `style` / `chore`、記事の追加は `post`
 - ブランチ・コミット・push・PR 作成までは Claude が行う（git 操作は agy にやらせない）
 - PR は squash merge。マージはユーザーが行う
-- PR を作ると Firebase のプレビューチャンネルにデプロイされるので、見た目の確認はそこで行える
+- PR を作る・push するたびに Firebase のプレビューチャンネルにデプロイされる（URL は PR にコメントされ、7 日で失効）。見た目の確認はそこで行う
