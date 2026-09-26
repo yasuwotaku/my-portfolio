@@ -26,10 +26,13 @@
 
 - `_posts/*.md` — ブログ記事（front matter は `gray-matter`、本文は `zenn-markdown-html` で変換）
 - `src/app/` — ルーティング（`/`, `/about`, `/posts`, `/posts/[slug]`, `/tags`, `/tags/[tag]`）
-- `src/components/` — UI コンポーネント
-- `src/lib/api.ts` — 記事の読み込み・一覧取得
-- `src/lib/markdownToHtml.ts` — Markdown → HTML
-- `src/interfaces/post.ts` — Post 型
+- `src/components/layout/` — レイアウトコンポーネント
+- `src/components/post/` — 記事関連コンポーネント
+- `src/components/tag/` — タグ関連コンポーネント
+- `src/lib/posts.ts` — 記事の読み込み・一覧取得
+- `src/lib/markdown.ts` — Markdown → HTML
+- `src/lib/site.ts` — サイト共通定数
+- `src/types/post.ts` — Post 型
 
 ## デプロイ
 
@@ -51,6 +54,7 @@
    - `-p` は必ず最後に置く（`-p` の直後の引数がプロンプトとして解釈されるため）
    - 長い指示はスクラッチパッドにファイルで書き、`"$(cat path/to/prompt.md)"` で渡す
    - 指示には「git コマンドは実行しない」「対象外のファイルは変更しない」を含める
+   - 「サブエージェントやバックグラウンドタスクは使わず直接作業する」も必ず含める（使うと完了を待ったままタイムアウトすることがある）
    - 続きの指示は `-c`（直前の会話を継続）を使う
 3. Claude が `git diff` と `pnpm build` / `pnpm lint` で結果を確認し、問題があれば修正指示を再度 `agy` に投げる
 4. ユーザーに結果を報告する

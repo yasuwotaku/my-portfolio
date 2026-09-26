@@ -23,7 +23,7 @@ const menuItems = [
 	},
 ];
 
-export default function NavBarMenu() {
+export function NavBarMenu() {
 	const segment = useSelectedLayoutSegment();
 
 	const items = menuItems.map((item) => ({

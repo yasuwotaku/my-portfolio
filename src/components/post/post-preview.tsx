@@ -1,18 +1,10 @@
-import DateFormatter from "./date-formatter";
-import { Tags } from "./tags";
-import SquareImage from "./square-image";
+import { DateFormatter } from "@/components/post/date-formatter";
+import { SquareImage } from "@/components/post/square-image";
+import { Tags } from "@/components/tag/tags";
+import { Post } from "@/types/post";
 import Link from "next/link";
 
-type Props = {
-	title: string;
-	coverImage: {
-		url: string;
-		alt: string;
-	};
-	date: string;
-	slug: string;
-	tags: string[];
-};
+type Props = Pick<Post, "title" | "coverImage" | "date" | "slug" | "tags">;
 
 export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
 	return (

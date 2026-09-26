@@ -9,7 +9,7 @@ type Props = {
 	slug?: string;
 };
 
-const SquareImage = ({ title, src, alt, slug }: Props) => {
+export function SquareImage({ title, src, alt, slug }: Props) {
 	const image = src ? (
 		<Image
 			fill
@@ -42,6 +42,4 @@ const SquareImage = ({ title, src, alt, slug }: Props) => {
 			)}
 		</div>
 	);
-};
-
-export default SquareImage;
+}

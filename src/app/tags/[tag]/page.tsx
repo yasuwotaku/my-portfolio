@@ -1,7 +1,7 @@
-import Container from "@/components/container";
-import { TagHeader } from "@/components/tag-header";
-import { Posts } from "@/components/posts";
-import { getAllTags, getPostsByTag } from "@/lib/api";
+import { Container } from "@/components/layout/container";
+import { Posts } from "@/components/post/posts";
+import { TagHeader } from "@/components/tag/tag-header";
+import { getAllTags, getPostsByTag } from "@/lib/posts";
 
 export default async function TaggedPosts(props: Params) {
 	const params = await props.params;

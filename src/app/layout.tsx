@@ -1,6 +1,6 @@
-import NavBar from "@/components/nav-bar";
-import Footer from "@/components/footer";
-import { SITE_NAME, SITE_DESCRIPTION, HOME_OG_IMAGE_URL } from "@/lib/constants";
+import { Footer } from "@/components/layout/footer";
+import { NavBar } from "@/components/layout/nav-bar";
+import { HOME_OG_IMAGE_URL, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";

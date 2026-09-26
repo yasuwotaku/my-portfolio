@@ -1,6 +1,6 @@
-import Container from "@/components/container";
-import { Posts } from "@/components/posts";
-import { getAllPosts } from "@/lib/api";
+import { Container } from "@/components/layout/container";
+import { Posts } from "@/components/post/posts";
+import { getAllPosts } from "@/lib/posts";
 
 export default function Index() {
 	const allPosts = getAllPosts();

@@ -1,5 +1,5 @@
-import { Post } from "@/interfaces/post";
-import { PostPreview } from "./post-preview";
+import { PostPreview } from "@/components/post/post-preview";
+import { Post } from "@/types/post";
 
 type Props = {
 	posts: Post[];

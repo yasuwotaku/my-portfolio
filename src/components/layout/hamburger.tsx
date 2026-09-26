@@ -1,9 +1,9 @@
-interface HamburgerMenuProps {
+type Props = {
 	isOpen: boolean;
 	toggleMenu: () => void;
-}
+};
 
-const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ isOpen, toggleMenu }) => {
+export function HamburgerMenu({ isOpen, toggleMenu }: Props) {
 	return (
 		<button
 			className={`
@@ -38,6 +38,4 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ isOpen, toggleMenu }) => 
 			</div>
 		</button>
 	);
-};
-
-export default HamburgerMenu;
+}

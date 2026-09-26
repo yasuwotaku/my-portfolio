@@ -1,11 +1,11 @@
 "use client";
 
-import NavBarMenu from "./nav-bar-menu";
-import React, { useState } from "react";
-import HamburgerMenu from "./hamburger";
-import Logo from "./logo";
+import { HamburgerMenu } from "@/components/layout/hamburger";
+import { Logo } from "@/components/layout/logo";
+import { NavBarMenu } from "@/components/layout/nav-bar-menu";
+import { useState } from "react";
 
-const NavBar = () => {
+export function NavBar() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const toggleMenu = () => {
@@ -42,6 +42,4 @@ const NavBar = () => {
 			</div>
 		</header>
 	);
-};
-
-export default NavBar;
+}
