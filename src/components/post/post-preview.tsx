@@ -15,10 +15,7 @@ export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
 			</div>
 			<Link
 				href={`/posts/${slug}`}
-				className={`
-					line-clamp-2 h-12
-					hover:underline
-				`}
+				className="line-clamp-2 h-12 hover:underline"
 			>
 				{title}
 			</Link>

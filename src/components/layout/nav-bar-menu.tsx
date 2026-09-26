@@ -32,23 +32,18 @@ export function NavBarMenu() {
 	}));
 
 	return (
-		<ul className={`flex items-center gap-1`}>
+		<ul className="flex items-center gap-1">
 			{items.map((item, i) => (
-				<li key={`menu-item-${i}`} className={`relative text-sm text-muted-foreground`}>
+				<li key={`menu-item-${i}`} className="relative text-sm">
 					<Link
 						href={`/${item.segment == "#" ? "" : item.segment}`}
-						className={cn(`group inline-block rounded px-4 py-2 text-lg`, {
+						className={cn("group inline-block rounded px-4 py-2 text-lg", {
 							"font-bold": item.isActive,
 						})}
 					>
 						{item.label}
 
-						<div
-							className={`
-								h-[2px] w-0 bg-black transition-all duration-200
-								group-hover:w-full
-							`}
-						></div>
+						<div className="h-[2px] w-0 bg-black transition-all duration-200 group-hover:w-full"></div>
 					</Link>
 				</li>
 			))}

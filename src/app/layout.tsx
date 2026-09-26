@@ -31,7 +31,7 @@ export default function RootLayout({
 				<link rel="icon" href="/favicon.ico" sizes="32x32" />
 				<script async src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
 			</head>
-			<body className={cn(inter.className, `flex min-h-screen flex-col`)}>
+			<body className={cn(inter.className, "flex min-h-screen flex-col")}>
 				<NavBar />
 				<div className="flex-auto">{children}</div>
 				<Footer />
