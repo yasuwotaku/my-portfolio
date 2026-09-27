@@ -1,6 +1,7 @@
 import { getExternalPosts } from "@/lib/external-posts";
 import {
 	BlogPostItem,
+	ExternalPostItem,
 	FeedItem,
 	Post,
 	postFrontmatterSchema,
@@ -12,6 +13,28 @@ import { join } from "path";
 const postsDirectory = join(process.cwd(), "_posts");
 
 let cachedPosts: Post[] | null = null;
+let blogTagMap: Map<string, string> | null = null;
+
+function normalizeTags(
+	tags: string[],
+	canonicalMap: Map<string, string>
+): string[] {
+	const normalized: string[] = [];
+	for (const tag of tags) {
+		const cleaned = tag.replace(/\s+/g, "");
+		if (!cleaned) continue;
+		const lower = cleaned.toLowerCase();
+		let canonical = canonicalMap.get(lower);
+		if (!canonical) {
+			canonical = cleaned;
+			canonicalMap.set(lower, cleaned);
+		}
+		if (!normalized.includes(canonical)) {
+			normalized.push(canonical);
+		}
+	}
+	return normalized;
+}
 
 function loadAllPosts(): Post[] {
 	if (cachedPosts) {
@@ -45,6 +68,11 @@ function loadAllPosts(): Post[] {
 	// sort posts by date in descending order
 	posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
 
+	blogTagMap = new Map<string, string>();
+	for (const post of posts) {
+		post.tags = normalizeTags(post.tags, blogTagMap);
+	}
+
 	cachedPosts = posts;
 	return cachedPosts;
 }
@@ -62,7 +90,9 @@ export function getPostsByTag(tag: string): Post[] {
 	return getAllPosts().filter((post) => post.tags.includes(tag));
 }
 
-export async function getFeedItems(): Promise<FeedItem[]> {
+let feedItemsPromise: Promise<FeedItem[]> | null = null;
+
+async function fetchAndNormalizeFeedItems(): Promise<FeedItem[]> {
 	const blogPosts = getAllPosts().map(
 		(post): BlogPostItem => ({
 			kind: "post",
@@ -75,12 +105,27 @@ export async function getFeedItems(): Promise<FeedItem[]> {
 	);
 
 	const externalPosts = await getExternalPosts();
-	const feedItems: FeedItem[] = [...blogPosts, ...externalPosts];
+	const canonicalMap = new Map(blogTagMap ?? []);
+	const normalizedExternalPosts: ExternalPostItem[] = externalPosts.map(
+		(item) => ({
+			...item,
+			tags: normalizeTags(item.tags, canonicalMap),
+		})
+	);
+
+	const feedItems: FeedItem[] = [...blogPosts, ...normalizedExternalPosts];
 
 	// sort all items by date in descending order
 	feedItems.sort((a, b) => (a.date > b.date ? -1 : 1));
 
 	return feedItems;
+}
+
+export function getFeedItems(): Promise<FeedItem[]> {
+	if (!feedItemsPromise) {
+		feedItemsPromise = fetchAndNormalizeFeedItems();
+	}
+	return feedItemsPromise;
 }
 
 export async function getFeedItemsByTag(tag: string): Promise<FeedItem[]> {

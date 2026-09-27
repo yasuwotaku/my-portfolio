@@ -39,24 +39,36 @@ export type ExternalPostItem = z.infer<typeof externalPostItemSchema>;
 
 export type FeedItem = BlogPostItem | ExternalPostItem;
 
-export const zennRssItemSchema = z.object({
+export const zennArticleItemSchema = z.object({
 	title: z.string(),
-	link: z.string(),
-	pubDate: z.string(),
+	path: z.string(),
+	published_at: z.string(),
+	slug: z.string(),
 });
 
-export const zennRssSchema = z.object({
-	rss: z.object({
-		channel: z.object({
-			item: z.array(zennRssItemSchema).optional(),
-		}),
+export const zennArticlesResponseSchema = z.object({
+	articles: z.array(zennArticleItemSchema),
+});
+
+export const zennTopicSchema = z.object({
+	display_name: z.string(),
+});
+
+export const zennArticleDetailSchema = z.object({
+	article: z.object({
+		topics: z.array(zennTopicSchema).default([]),
 	}),
+});
+
+export const qiitaTagSchema = z.object({
+	name: z.string(),
 });
 
 export const qiitaItemSchema = z.object({
 	title: z.string(),
 	url: z.string(),
 	created_at: z.string(),
+	tags: z.array(qiitaTagSchema).default([]),
 });
 
 export const qiitaResponseSchema = z.array(qiitaItemSchema);
