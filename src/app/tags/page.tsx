@@ -1,10 +1,20 @@
 import { Container } from "@/components/layout/container";
+import { TagList } from "@/components/tag/tag-list";
+import { getTagCounts } from "@/lib/posts";
+import { SITE_NAME } from "@/lib/site";
+import type { Metadata } from "next";
 
-export default function Index() {
+export const metadata: Metadata = {
+	title: `Tags | ${SITE_NAME}`,
+};
+
+export default async function Index() {
+	const tagCounts = await getTagCounts();
+
 	return (
 		<main>
 			<Container>
-				<div className="w-full text-center font-black">coming soon...</div>
+				<TagList tagCounts={tagCounts} />
 			</Container>
 		</main>
 	);
