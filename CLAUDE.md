@@ -47,36 +47,8 @@
 
 ## 作業の進め方（Claude 向け）
 
-コスト節約のため、Claude は **計画・レビュー・ユーザーとのやり取り** に集中し、実装作業は `agy`（Antigravity CLI）経由で Gemini に委譲する。
+共通の進め方（agy への委譲、確認手順、Git 運用）は `~/.claude/CLAUDE.md` に書いてある。このリポジトリ固有の点だけ以下に書く。
 
-### 委譲の手順
-
-1. Claude がタスクを小さく分割し、具体的な作業指示（対象ファイル、変更内容、完了条件）を書く
-2. `agy` で実行する:
-   ```sh
-   agy --print-timeout 300s --model gemini-3.8-flash-high --dangerously-skip-permissions -p "<作業指示>"
-   ```
-   - `-p` は必ず最後に置く（`-p` の直後の引数がプロンプトとして解釈されるため）
-   - 長い指示はスクラッチパッドにファイルで書き、`"$(cat path/to/prompt.md)"` で渡す
-   - 指示には「git コマンドは実行しない」「対象外のファイルは変更しない」を含める
-   - 「サブエージェントやバックグラウンドタスクは使わず直接作業する」も必ず含める（使うと完了を待ったままタイムアウトすることがある）
-   - 続きの指示は `-c`（直前の会話を継続）を使う
-3. Claude が `git diff` と `pnpm build` / `pnpm lint` で結果を確認し、問題があれば修正指示を再度 `agy` に投げる
-4. ユーザーに結果を報告する
-
-### 方針
-
-- 小さな修正（数行程度）や、委譲の方が手間になるものは Claude が直接やってよい
-- 文章（README や UI 文言）は絵文字を使わず簡潔に。AI っぽい冗長な説明は避ける
-
-## Git 運用
-
-- 作業ごとに `main` からブランチを切る。命名は [Conventional Branch](https://conventional-branch.github.io/) に従う: `<type>/<説明>`（小文字・ハイフン区切り）
-  - `feature/` 機能追加、`bugfix/` バグ修正、`hotfix/` 緊急修正、`release/` リリース準備、`chore/` それ以外（リファクタリング、ドキュメント、依存更新など）
-  - 例: `feature/about-page`, `bugfix/tag-link`, `chore/update-readme`
-- コミットメッセージは Conventional Commits 形式、説明は日本語（例: `feat: About ページを追加`）
-  - type: `feat` / `fix` / `refactor` / `docs` / `style` / `chore`、記事の追加は `post`
-  - Claude（agy 経由の作業も含む）がコミットするときは、末尾に `Co-Authored-By: Claude <noreply@anthropic.com>` 形式の trailer を必ず付ける
-- ブランチ・コミット・push・PR 作成までは Claude が行う（git 操作は agy にやらせない）
-- PR は squash merge。マージはユーザーが行う
+- 確認は `pnpm build` / `pnpm lint` / `pnpm typecheck` の 3 つ
+- コミットの type は Conventional Commits の `feat` / `fix` / `refactor` / `docs` / `style` / `chore` に加え、記事の追加は `post`
 - PR を作る・push するたびに Firebase のプレビューチャンネルにデプロイされる（URL は PR にコメントされ、7 日で失効）。見た目の確認はそこで行う
