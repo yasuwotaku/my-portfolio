@@ -46,4 +46,4 @@ tags:
 ## デプロイ
 
 `output: "export"` により静的サイトとして `out/` に出力し、Firebase Hosting にデプロイ。
-GitHub Actions により、`main` への push で本番環境（live）、PR でプレビューチャンネルに自動デプロイされる。
+GitHub Actions により、`main` への push で本番環境（live）、PR でプレビューチャンネルに自動デプロイされる。また、毎日の定期ビルドにより Zenn や Qiita の新しい記事が自動的に反映される。
