@@ -4,52 +4,47 @@ import { TagList } from "@/components/tag/tag-list";
 import {
 	getAllTopics,
 	getCategoryTopicSlugs,
-	getFeedItemsBySlug,
+	getFeedItemsByCategoryAndTopic,
 	getTopicBySlug,
 } from "@/lib/posts";
 import { SITE_NAME } from "@/lib/site";
-import { CATEGORY_SLUGS, isCategorySlug, slugToCategory } from "@/lib/topics";
+import { isCategorySlug, slugToCategory } from "@/lib/topics";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export const dynamicParams = false;
 
 type Params = {
 	params: Promise<{
 		slug: string;
+		topic: string;
 	}>;
 };
 
 export async function generateMetadata(props: Params): Promise<Metadata> {
 	const params = await props.params;
-	if (isCategorySlug(params.slug)) {
-		const category = slugToCategory(params.slug);
-		return {
-			title: `${category} | ${SITE_NAME}`,
-		};
-	}
+	const category = isCategorySlug(params.slug)
+		? slugToCategory(params.slug)
+		: undefined;
+	const topic = await getTopicBySlug(params.topic);
 
-	const topic = await getTopicBySlug(params.slug);
-	if (topic) {
-		return {
-			title: `#${topic.label} | ${SITE_NAME}`,
-		};
-	}
+	const categoryName = category ?? params.slug;
+	const topicLabel = topic ? topic.label : params.topic;
 
 	return {
-		title: `${params.slug} | ${SITE_NAME}`,
+		title: `${categoryName} #${topicLabel} | ${SITE_NAME}`,
 	};
 }
 
-export default async function TaggedPosts(props: Params) {
+export default async function TaggedCategoryTopicPosts(props: Params) {
 	const params = await props.params;
-	const currentCategory = isCategorySlug(params.slug)
-		? params.slug
-		: undefined;
-	const currentTopic = currentCategory ? undefined : params.slug;
+	if (!isCategorySlug(params.slug)) {
+		notFound();
+	}
 
 	const [topics, posts, categoryTopicSlugs] = await Promise.all([
 		getAllTopics(),
-		getFeedItemsBySlug(params.slug),
+		getFeedItemsByCategoryAndTopic(params.slug, params.topic),
 		getCategoryTopicSlugs(),
 	]);
 
@@ -59,8 +54,8 @@ export default async function TaggedPosts(props: Params) {
 				<TagList
 					topics={topics}
 					categoryTopicSlugs={categoryTopicSlugs}
-					currentCategory={currentCategory}
-					currentTopic={currentTopic}
+					currentCategory={params.slug}
+					currentTopic={params.topic}
 				/>
 				{posts.length > 0 && <Posts posts={posts} />}
 			</Container>
@@ -69,9 +64,8 @@ export default async function TaggedPosts(props: Params) {
 }
 
 export async function generateStaticParams() {
-	const topics = await getAllTopics();
-	const categoryParams = CATEGORY_SLUGS.map((slug) => ({ slug }));
-	const topicParams = topics.map((topic) => ({ slug: topic.slug }));
-
-	return [...categoryParams, ...topicParams];
+	const categoryTopicSlugs = await getCategoryTopicSlugs();
+	return Object.entries(categoryTopicSlugs).flatMap(([slug, topics]) =>
+		topics.map((topic) => ({ slug, topic }))
+	);
 }

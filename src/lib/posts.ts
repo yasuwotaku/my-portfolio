@@ -1,5 +1,11 @@
 import { getExternalPosts } from "@/lib/external-posts";
-import { isCategorySlug, topicToSlug } from "@/lib/topics";
+import {
+	CATEGORY_SLUGS,
+	CategorySlug,
+	categoryToSlug,
+	isCategorySlug,
+	topicToSlug,
+} from "@/lib/topics";
 import {
 	BlogPostItem,
 	ExternalPostItem,
@@ -162,3 +168,29 @@ export async function getFeedItemsBySlug(slug: string): Promise<FeedItem[]> {
 		item.topics.some((topic) => topic.slug === slug)
 	);
 }
+
+export async function getFeedItemsByCategoryAndTopic(
+	categorySlug: CategorySlug,
+	topicSlug: string
+): Promise<FeedItem[]> {
+	const feedItems = await getFeedItems();
+	return feedItems.filter(
+		(item) =>
+			categoryToSlug(item.category) === categorySlug &&
+			item.topics.some((topic) => topic.slug === topicSlug)
+	);
+}
+
+export async function getCategoryTopicSlugs(): Promise<
+	Record<CategorySlug, string[]>
+> {
+	const feedItems = await getFeedItems();
+	const entries = CATEGORY_SLUGS.map((category) => {
+		const slugs = feedItems
+			.filter((item) => categoryToSlug(item.category) === category)
+			.flatMap((item) => item.topics.map((topic) => topic.slug));
+		return [category, [...new Set(slugs)]] as const;
+	});
+	return Object.fromEntries(entries) as Record<CategorySlug, string[]>;
+}
+

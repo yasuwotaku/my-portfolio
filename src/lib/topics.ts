@@ -32,3 +32,16 @@ export function topicToSlug(label: string): string {
 		.replace(/\+/g, "plus")
 		.replace(/[^a-z0-9]/g, "");
 }
+
+export function tagsPath(category?: CategorySlug, topic?: string): string {
+	if (category && topic) {
+		return `/tags/${category}/${topic}`;
+	}
+	if (category) {
+		return `/tags/${category}`;
+	}
+	if (topic) {
+		return `/tags/${topic}`;
+	}
+	return "/tags";
+}

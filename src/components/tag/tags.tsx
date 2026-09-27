@@ -15,7 +15,7 @@ export function Tags({ category, topics }: Props) {
 		<div className="flex gap-x-1 overflow-x-auto">
 			<Link
 				href={`/tags/${categorySlug}`}
-				className="m-1 flex shrink-0 flex-row rounded-full bg-gray-200 px-2 text-sm font-black whitespace-nowrap transition-colors hover:bg-gray-300"
+				className="m-1 flex shrink-0 flex-row rounded-full bg-gray-200 px-2 text-sm font-black whitespace-nowrap outline outline-gray-200 transition-colors hover:bg-gray-300 hover:outline-gray-300"
 			>
 				{category}
 			</Link>
