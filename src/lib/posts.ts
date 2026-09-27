@@ -1,9 +1,19 @@
 import { getExternalPosts } from "@/lib/external-posts";
 import {
+	CATEGORY_SLUGS,
+	CategorySlug,
+	categoryToSlug,
+	isCategorySlug,
+	topicToSlug,
+} from "@/lib/topics";
+import {
 	BlogPostItem,
+	ExternalPostItem,
 	FeedItem,
 	Post,
 	postFrontmatterSchema,
+	RawExternalPostItem,
+	Topic,
 } from "@/types/post";
 import fs from "fs";
 import matter from "gray-matter";
@@ -12,6 +22,27 @@ import { join } from "path";
 const postsDirectory = join(process.cwd(), "_posts");
 
 let cachedPosts: Post[] | null = null;
+
+// 同じ slug のトピックは最初に出てきた表記に揃える。
+// ブログ記事を外部記事より先に処理するので、ブログ記事の表記が優先される。
+const topicLabels = new Map<string, string>();
+
+function resolveTopics(rawTopics: { slug?: string; label: string }[]): Topic[] {
+	const topics: Topic[] = [];
+	for (const { slug: rawSlug, label: rawLabel } of rawTopics) {
+		// 表示をコンパクトにし、空白の有無による表記ゆれを吸収する
+		const label = rawLabel.replace(/\s+/g, "");
+		const slug = topicToSlug(rawSlug ?? label);
+		if (!slug || isCategorySlug(slug) || topics.some((t) => t.slug === slug)) {
+			continue;
+		}
+		if (!topicLabels.has(slug)) {
+			topicLabels.set(slug, label);
+		}
+		topics.push({ slug, label: topicLabels.get(slug) ?? label });
+	}
+	return topics;
+}
 
 function loadAllPosts(): Post[] {
 	if (cachedPosts) {
@@ -22,7 +53,7 @@ function loadAllPosts(): Post[] {
 		.readdirSync(postsDirectory)
 		.filter((file) => file.endsWith(".md"));
 
-	const posts = fileNames.map((fileName) => {
+	const posts: Post[] = fileNames.map((fileName) => {
 		const fullPath = join(postsDirectory, fileName);
 		const fileContents = fs.readFileSync(fullPath, "utf8");
 		const { data, content } = matter(fileContents);
@@ -34,10 +65,11 @@ function loadAllPosts(): Post[] {
 			);
 		}
 
-		const slug = fileName.replace(/\.md$/, "");
 		return {
 			...result.data,
-			slug,
+			category: "Blog",
+			topics: resolveTopics(result.data.topics.map((label) => ({ label }))),
+			slug: fileName.replace(/\.md$/, ""),
 			content,
 		};
 	});
@@ -58,24 +90,37 @@ export function getPostBySlug(slug: string): Post | undefined {
 	return getAllPosts().find((post) => post.slug === realSlug);
 }
 
-export function getPostsByTag(tag: string): Post[] {
-	return getAllPosts().filter((post) => post.tags.includes(tag));
-}
+let feedItemsPromise: Promise<FeedItem[]> | null = null;
 
-export async function getFeedItems(): Promise<FeedItem[]> {
-	const blogPosts = getAllPosts().map(
+async function fetchAndNormalizeFeedItems(): Promise<FeedItem[]> {
+	const posts = getAllPosts();
+	const blogPosts: BlogPostItem[] = posts.map(
 		(post): BlogPostItem => ({
 			kind: "post",
 			slug: post.slug,
 			title: post.title,
 			date: post.date,
 			coverImage: post.coverImage,
-			tags: post.tags,
+			category: post.category,
+			topics: post.topics,
 		})
 	);
 
-	const externalPosts = await getExternalPosts();
-	const feedItems: FeedItem[] = [...blogPosts, ...externalPosts];
+	const rawExternalPosts: RawExternalPostItem[] = await getExternalPosts();
+
+	const normalizedExternalPosts: ExternalPostItem[] = rawExternalPosts.map(
+		(item) => ({
+			kind: "external",
+			source: item.source,
+			url: item.url,
+			title: item.title,
+			date: item.date,
+			category: item.category,
+			topics: resolveTopics(item.rawTopics),
+		})
+	);
+
+	const feedItems: FeedItem[] = [...blogPosts, ...normalizedExternalPosts];
 
 	// sort all items by date in descending order
 	feedItems.sort((a, b) => (a.date > b.date ? -1 : 1));
@@ -83,26 +128,69 @@ export async function getFeedItems(): Promise<FeedItem[]> {
 	return feedItems;
 }
 
-export async function getFeedItemsByTag(tag: string): Promise<FeedItem[]> {
-	const feedItems = await getFeedItems();
-	return feedItems.filter((item) => item.tags.includes(tag));
+export function getFeedItems(): Promise<FeedItem[]> {
+	if (!feedItemsPromise) {
+		feedItemsPromise = fetchAndNormalizeFeedItems();
+	}
+	return feedItemsPromise;
 }
 
-export async function getTagCounts(): Promise<{ tag: string; count: number }[]> {
-	const tagCountMap = new Map<string, number>();
+export async function getAllTopics(): Promise<Topic[]> {
 	const feedItems = await getFeedItems();
+	const topicMap = new Map<string, Topic>();
+
 	for (const item of feedItems) {
-		for (const tag of item.tags) {
-			tagCountMap.set(tag, (tagCountMap.get(tag) ?? 0) + 1);
+		for (const topic of item.topics) {
+			if (!topicMap.has(topic.slug)) {
+				topicMap.set(topic.slug, topic);
+			}
 		}
 	}
 
-	return Array.from(tagCountMap.entries())
-		.map(([tag, count]) => ({ tag, count }))
-		.sort((a, b) => a.tag.localeCompare(b.tag));
+	return Array.from(topicMap.values()).sort((a, b) =>
+		a.label.localeCompare(b.label)
+	);
 }
 
-export async function getAllTags(): Promise<string[]> {
-	const tagCounts = await getTagCounts();
-	return tagCounts.map((item) => item.tag);
+export async function getTopicBySlug(slug: string): Promise<Topic | undefined> {
+	const topics = await getAllTopics();
+	return topics.find((t) => t.slug === slug);
 }
+
+export async function getFeedItemsBySlug(slug: string): Promise<FeedItem[]> {
+	const feedItems = await getFeedItems();
+	if (isCategorySlug(slug)) {
+		return feedItems.filter(
+			(item) => item.category.toLowerCase() === slug.toLowerCase()
+		);
+	}
+	return feedItems.filter((item) =>
+		item.topics.some((topic) => topic.slug === slug)
+	);
+}
+
+export async function getFeedItemsByCategoryAndTopic(
+	categorySlug: CategorySlug,
+	topicSlug: string
+): Promise<FeedItem[]> {
+	const feedItems = await getFeedItems();
+	return feedItems.filter(
+		(item) =>
+			categoryToSlug(item.category) === categorySlug &&
+			item.topics.some((topic) => topic.slug === topicSlug)
+	);
+}
+
+export async function getCategoryTopicSlugs(): Promise<
+	Record<CategorySlug, string[]>
+> {
+	const feedItems = await getFeedItems();
+	const entries = CATEGORY_SLUGS.map((category) => {
+		const slugs = feedItems
+			.filter((item) => categoryToSlug(item.category) === category)
+			.flatMap((item) => item.topics.map((topic) => topic.slug));
+		return [category, [...new Set(slugs)]] as const;
+	});
+	return Object.fromEntries(entries) as Record<CategorySlug, string[]>;
+}
+

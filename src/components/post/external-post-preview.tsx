@@ -9,7 +9,8 @@ export function ExternalPostPreview({
 	url,
 	date,
 	source,
-	tags,
+	category,
+	topics,
 }: ExternalPostItem) {
 	return (
 		<div className="flex flex-col gap-1 p-4">
@@ -30,7 +31,7 @@ export function ExternalPostPreview({
 				<span>{title}</span>
 				<OpenNewWindow className="ml-1 inline-block size-3.5 shrink-0 align-[-0.125em]" />
 			</a>
-			<Tags tags={tags} />
+			<Tags category={category} topics={topics} />
 		</div>
 	);
 }

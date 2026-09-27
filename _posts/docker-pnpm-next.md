@@ -7,9 +7,12 @@ coverImage:
 date: "2025-03-19T02:40:00"
 ogImage:
     url: "/assets/album/DSC02455.JPG"
-tags:
-    - "Tech"
-    - "Web"
+topics:
+    - "Docker"
+    - "pnpm"
+    - "Next.js"
+    - "FirebaseHosting"
+    - "GitHubActions"
 ---
 
 こちらのブログを立てたとき、書いてある手順通りにやっただけだといまいち何をしているかよくわからなかったので、今回は手順を順番に調べながら、かつちょっと前の手順とはずらしながら環境構築とサイトの公開をしてみます。

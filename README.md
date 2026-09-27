@@ -38,8 +38,8 @@ coverImage:
 date: "2025-01-01T00:00:00"
 ogImage:
   url: "/assets/blog/<slug>/cover.jpg"
-tags:
-  - "Blog"
+topics:
+  - "Next.js"
 ---
 ```
 

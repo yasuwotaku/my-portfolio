@@ -4,12 +4,27 @@ import { Tags } from "@/components/tag/tags";
 import { Post } from "@/types/post";
 import Link from "next/link";
 
-type Props = Pick<Post, "title" | "coverImage" | "date" | "slug" | "tags">;
+type Props = Pick<
+	Post,
+	"title" | "coverImage" | "date" | "slug" | "category" | "topics"
+>;
 
-export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
+export function PostPreview({
+	title,
+	coverImage,
+	date,
+	slug,
+	category,
+	topics,
+}: Props) {
 	return (
 		<div className="flex flex-col gap-1 p-4">
-			<SquareImage slug={slug} title={title} src={coverImage.url} alt={coverImage.alt} />
+			<SquareImage
+				slug={slug}
+				title={title}
+				src={coverImage.url}
+				alt={coverImage.alt}
+			/>
 			<div className="text-sm font-bold">
 				<DateFormatter dateString={date} />
 			</div>
@@ -19,7 +34,7 @@ export function PostPreview({ title, coverImage, date, slug, tags }: Props) {
 			>
 				{title}
 			</Link>
-			<Tags tags={tags} />
+			<Tags category={category} topics={topics} />
 		</div>
 	);
 }

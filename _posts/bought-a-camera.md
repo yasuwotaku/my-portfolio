@@ -7,8 +7,9 @@ coverImage:
 date: "2025-03-20T22:40:00"
 ogImage:
     url: "/assets/album/DSC02641.JPG"
-tags:
-    - "Blog"
+topics:
+    - "Camera"
+    - "SONY"
 ---
 
 大きな額の買い物をしました。

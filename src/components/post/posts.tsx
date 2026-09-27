@@ -18,7 +18,8 @@ export function Posts({ posts }: Props) {
 							coverImage={item.coverImage}
 							date={item.date}
 							slug={item.slug}
-							tags={item.tags}
+							category={item.category}
+							topics={item.topics}
 						/>
 					) : (
 						<ExternalPostPreview
@@ -28,7 +29,8 @@ export function Posts({ posts }: Props) {
 							url={item.url}
 							date={item.date}
 							source={item.source}
-							tags={item.tags}
+							category={item.category}
+							topics={item.topics}
 						/>
 					)
 				)}
@@ -36,4 +38,3 @@ export function Posts({ posts }: Props) {
 		</section>
 	);
 }
-
