@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { ServiceLogo } from "@/components/post/service-logo";
+import { ServiceIcon } from "@/components/icon/service-icon";
 
 type Props = {
 	title: string;
@@ -23,7 +23,7 @@ export function ExternalSquareImage({ title, url, source }: Props) {
 						"bg-[#EEF9E6] text-[#55C500]": source === "qiita",
 					})}
 				>
-					<ServiceLogo source={source} className="size-[38%]" />
+					<ServiceIcon service={source} className="size-[38%]" />
 				</div>
 			</a>
 		</div>
