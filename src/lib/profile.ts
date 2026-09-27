@@ -102,11 +102,15 @@ export const PROFILE: Profile = {
 				{ src: "/assets/album/DSC00009.JPG", alt: "DSC00009" },
 			],
 		},
-		{ name: "映画" },
+		{
+			name: "映画",
+			description: "クリストファー・ノーランが好き。マーベル作品も追える範囲で追っています。",
+		},
 		{ name: "読書" },
 		{ name: "アニメ" },
-		{ name: "漫画" },
+		{ name: "漫画", description: "週刊少年ジャンプを購読中。" },
 		{ name: "YouTube" },
 		{ name: "料理" },
+		{ name: "開発" },
 	],
 };

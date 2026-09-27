@@ -2,6 +2,7 @@
 
 import { Hobby } from "@/lib/profile";
 import cn from "classnames";
+import { NavArrowDown } from "iconoir-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -30,13 +31,19 @@ export function HobbyList({ hobbies }: Props) {
 							aria-expanded={hobby.name === selected}
 							onClick={() => setSelected(hobby.name === selected ? undefined : hobby.name)}
 							className={cn(
-								"flex shrink-0 cursor-pointer rounded-full px-2 py-0.5 text-sm font-black whitespace-nowrap outline transition-colors",
+								"flex shrink-0 cursor-pointer items-center gap-0.5 rounded-full py-0.5 pr-1 pl-2 text-sm font-black whitespace-nowrap outline transition-colors",
 								hobby.name === selected
 									? "bg-black text-white outline-black"
 									: "bg-white hover:bg-gray-300"
 							)}
 						>
 							{hobby.name}
+							<NavArrowDown
+								aria-hidden="true"
+								className={cn("size-3.5 transition-transform duration-200", {
+									"rotate-180": hobby.name === selected,
+								})}
+							/>
 						</button>
 					) : (
 						<span
