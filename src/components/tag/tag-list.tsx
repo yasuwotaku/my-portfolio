@@ -1,4 +1,4 @@
-import { CategorySlug, tagsPath } from "@/lib/topics";
+import { CategorySlug, postsPath } from "@/lib/topics";
 import { Category, Topic } from "@/types/post";
 import cn from "classnames";
 import { Hashtag } from "iconoir-react";
@@ -37,7 +37,8 @@ export function TagList({
 		<div className="m-4 flex flex-col gap-2">
 			<div className="flex flex-wrap">
 				<Link
-					href={tagsPath(undefined, currentTopic)}
+					href={postsPath(undefined, currentTopic)}
+					scroll={false}
 					className={cn(
 						"m-1 flex shrink-0 flex-row rounded-full px-2 text-base font-black whitespace-nowrap outline transition-colors",
 						isAllSelected
@@ -54,15 +55,16 @@ export function TagList({
 						? Boolean(categoryTopicSlugs[item.slug]?.includes(currentTopic))
 						: true;
 					const href = isCurrent
-						? tagsPath(undefined, currentTopic)
+						? postsPath(undefined, currentTopic)
 						: hasCombination
-							? tagsPath(item.slug, currentTopic)
-							: tagsPath(item.slug);
+							? postsPath(item.slug, currentTopic)
+							: postsPath(item.slug);
 
 					return (
 						<Link
 							key={item.slug}
 							href={href}
+							scroll={false}
 							className={cn(
 								"m-1 flex shrink-0 flex-row rounded-full px-2 text-base font-black whitespace-nowrap outline transition-colors",
 								isCurrent
@@ -80,13 +82,14 @@ export function TagList({
 				{sortedTopics.map((topic) => {
 					const isCurrent = currentTopic === topic.slug;
 					const href = isCurrent
-						? tagsPath(currentCategory)
-						: tagsPath(currentCategory, topic.slug);
+						? postsPath(currentCategory)
+						: postsPath(currentCategory, topic.slug);
 
 					return (
 						<Link
 							key={topic.slug}
 							href={href}
+							scroll={false}
 							className={cn(
 								"m-1 flex shrink-0 flex-row rounded-full px-1 text-sm font-black whitespace-nowrap outline transition-colors",
 								isCurrent

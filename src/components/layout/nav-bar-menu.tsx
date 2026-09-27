@@ -14,10 +14,6 @@ const menuItems = [
 		segment: "posts",
 	},
 	{
-		label: "Tags",
-		segment: "tags",
-	},
-	{
 		label: "About",
 		segment: "about",
 	},

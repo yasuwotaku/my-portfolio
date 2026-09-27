@@ -1,4 +1,4 @@
-import { categoryToSlug } from "@/lib/topics";
+import { categoryToSlug, postsPath } from "@/lib/topics";
 import { Category, Topic } from "@/types/post";
 import { Hashtag } from "iconoir-react";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export function Tags({ category, topics }: Props) {
 	return (
 		<div className="flex gap-x-1 overflow-x-auto">
 			<Link
-				href={`/tags/${categorySlug}`}
+				href={postsPath(categorySlug)}
 				className="m-1 flex shrink-0 flex-row rounded-full bg-gray-200 px-2 text-sm font-black whitespace-nowrap outline outline-gray-200 transition-colors hover:bg-gray-300 hover:outline-gray-300"
 			>
 				{category}
@@ -22,7 +22,7 @@ export function Tags({ category, topics }: Props) {
 			{topics.map((topic) => (
 				<Link
 					key={topic.slug}
-					href={`/tags/${topic.slug}`}
+					href={postsPath(undefined, topic.slug)}
 					className="m-1 flex shrink-0 flex-row rounded-full bg-white px-1 text-sm font-black whitespace-nowrap outline transition-colors hover:bg-gray-300"
 				>
 					<Hashtag className="w-3.5" />

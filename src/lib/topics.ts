@@ -33,15 +33,14 @@ export function topicToSlug(label: string): string {
 		.replace(/[^a-z0-9]/g, "");
 }
 
-export function tagsPath(category?: CategorySlug, topic?: string): string {
-	if (category && topic) {
-		return `/tags/${category}/${topic}`;
-	}
+export function postsPath(category?: CategorySlug, topic?: string): string {
+	const params = new URLSearchParams();
 	if (category) {
-		return `/tags/${category}`;
+		params.set("category", category);
 	}
 	if (topic) {
-		return `/tags/${topic}`;
+		params.set("topic", topic);
 	}
-	return "/tags";
+	const queryString = params.toString();
+	return queryString ? `/posts?${queryString}` : "/posts";
 }

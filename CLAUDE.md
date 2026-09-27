@@ -25,7 +25,7 @@
 ## 構成
 
 - `_posts/*.md` — ブログ記事（front matter は `gray-matter`、本文は `zenn-markdown-html` で変換）
-- `src/app/` — ルーティング（`/`, `/about`, `/posts`, `/posts/[slug]`, `/tags`, `/tags/[slug]`）
+- `src/app/` — ルーティング（`/`, `/about`, `/posts`, `/posts/[slug]`）
 - `src/components/layout/` — レイアウトコンポーネント
 - `src/components/post/` — 記事関連コンポーネント
 - `src/components/tag/` — タグ関連コンポーネント
