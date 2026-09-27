@@ -1,0 +1,139 @@
+export type ProfileLink = {
+	service: "github" | "x" | "zenn" | "qiita";
+	label: string;
+	url: string;
+};
+
+export type TimelineItem = {
+	period: string;
+	description: string;
+};
+
+export type SkillGroup = {
+	name: string;
+	skills: string[];
+};
+
+export type HobbyPhoto = {
+	src: string;
+	alt: string;
+};
+
+export type Hobby = {
+	description: string;
+	postLink: {
+		href: string;
+		label: string;
+	};
+	photos: HobbyPhoto[];
+};
+
+export type Profile = {
+	name: string;
+	handle: string;
+	icon: string;
+	bio: string;
+	links: ProfileLink[];
+	timeline: TimelineItem[];
+	skills: SkillGroup[];
+	hobby: Hobby;
+};
+
+export const PROFILE: Profile = {
+	name: "Takumi Yasuda",
+	handle: "yasuwotaku",
+	icon: "/assets/profile/icon.jpg",
+	bio: "千葉県南房総市出身、都内在住。Android アプリを作っています。",
+	links: [
+		{
+			service: "github",
+			label: "GitHub",
+			url: "https://github.com/yasuwotaku",
+		},
+		{
+			service: "x",
+			label: "X",
+			url: "https://x.com/yasuwotaku",
+		},
+		{
+			service: "zenn",
+			label: "Zenn",
+			url: "https://zenn.dev/yasuwotaku",
+		},
+		{
+			service: "qiita",
+			label: "Qiita",
+			url: "https://qiita.com/yasuwotaku",
+		},
+	],
+	timeline: [
+		{
+			period: "2013.4",
+			description: "木更津工業高等専門学校 情報工学科 入学",
+		},
+		{
+			period: "2018.3",
+			description: "木更津工業高等専門学校 情報工学科 卒業",
+		},
+		{
+			period: "2018.4",
+			description: "木更津工業高等専門学校 専攻科 制御・情報システム工学専攻 入学",
+		},
+		{
+			period: "2020.3",
+			description: "木更津工業高等専門学校 専攻科 制御・情報システム工学専攻 修了",
+		},
+		{
+			period: "2020.4",
+			description: "筑波大学大学院 システム情報工学研究群 サービス工学学位プログラム 入学",
+		},
+		{
+			period: "2022.3",
+			description: "筑波大学大学院 システム情報工学研究群 サービス工学学位プログラム 修了",
+		},
+		{
+			period: "2022.4",
+			description: "社会進出",
+		},
+	],
+	skills: [
+		{
+			name: "Android",
+			skills: [
+				"Kotlin",
+				"Jetpack Compose",
+				"Coroutines / Flow",
+				"Android View",
+			],
+		},
+		{
+			name: "Web",
+			skills: ["TypeScript", "Next.js", "Tailwind CSS"],
+		},
+		{
+			name: "Others",
+			skills: ["Python", "Go", "GitHub Actions", "BigQuery"],
+		},
+	],
+	hobby: {
+		description: "カメラ。SONY α7C II と、7 年使っている RX10。",
+		postLink: {
+			href: "/posts/bought-a-camera",
+			label: "カメラを買った話",
+		},
+		photos: [
+			{
+				src: "/assets/album/DSC00001.JPG",
+				alt: "DSC00001",
+			},
+			{
+				src: "/assets/album/DSC00007.JPG",
+				alt: "DSC00007",
+			},
+			{
+				src: "/assets/album/DSC00009.JPG",
+				alt: "DSC00009",
+			},
+		],
+	},
+};

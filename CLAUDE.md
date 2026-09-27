@@ -32,6 +32,7 @@
 - `src/lib/posts.ts` — 記事の読み込み・一覧・タグ取得（モジュールレベルでキャッシュ）
 - `src/lib/external-posts.ts` — Zenn (API) / Qiita (API) からの外部記事取得（ビルド時に取得・検証）
 - `src/lib/markdown.ts` — Markdown → HTML
+- `src/lib/profile.ts` — プロフィール情報（About ページ用）
 - `src/lib/site.ts` — サイト共通定数
 - `src/lib/topics.ts` — カテゴリ・トピックの定義および slug 生成などの正規化処理
 - `src/types/post.ts` — Post 型・front matter の Zod スキーマ
