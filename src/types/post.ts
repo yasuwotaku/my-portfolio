@@ -1,5 +1,16 @@
 import { z } from "zod";
 
+export const CATEGORY_NAMES = ["Blog", "Tech", "Zenn", "Qiita"] as const;
+export type Category = (typeof CATEGORY_NAMES)[number];
+
+export const BLOG_CATEGORIES = ["Blog", "Tech"] as const;
+export type BlogCategory = (typeof BLOG_CATEGORIES)[number];
+
+export type Topic = {
+	slug: string;
+	label: string;
+};
+
 export const postFrontmatterSchema = z.object({
 	title: z.string(),
 	excerpt: z.string(),
@@ -11,20 +22,44 @@ export const postFrontmatterSchema = z.object({
 	ogImage: z.object({
 		url: z.string(),
 	}),
-	tags: z.array(z.string()),
+	category: z.enum(BLOG_CATEGORIES),
+	topics: z.array(z.string()).default([]),
 });
 
 export type PostFrontmatter = z.infer<typeof postFrontmatterSchema>;
 
-export type Post = PostFrontmatter & {
+export type Post = Omit<PostFrontmatter, "topics"> & {
 	slug: string;
 	content: string;
+	topics: Topic[];
 };
 
 export type BlogPostItem = { kind: "post" } & Pick<
 	Post,
-	"slug" | "title" | "date" | "coverImage" | "tags"
+	"slug" | "title" | "date" | "coverImage" | "category" | "topics"
 >;
+
+export type RawExternalTopic = {
+	slug?: string;
+	label: string;
+};
+
+export const rawExternalPostItemSchema = z.object({
+	kind: z.literal("external"),
+	source: z.enum(["zenn", "qiita"]),
+	url: z.url(),
+	title: z.string(),
+	date: z.iso.datetime({ local: true }),
+	category: z.enum(["Zenn", "Qiita"]),
+	rawTopics: z.array(
+		z.object({
+			slug: z.string().optional(),
+			label: z.string(),
+		})
+	),
+});
+
+export type RawExternalPostItem = z.infer<typeof rawExternalPostItemSchema>;
 
 export const externalPostItemSchema = z.object({
 	kind: z.literal("external"),
@@ -32,7 +67,13 @@ export const externalPostItemSchema = z.object({
 	url: z.url(),
 	title: z.string(),
 	date: z.iso.datetime({ local: true }),
-	tags: z.array(z.string()),
+	category: z.enum(["Zenn", "Qiita"]),
+	topics: z.array(
+		z.object({
+			slug: z.string(),
+			label: z.string(),
+		})
+	),
 });
 
 export type ExternalPostItem = z.infer<typeof externalPostItemSchema>;
@@ -51,6 +92,7 @@ export const zennArticlesResponseSchema = z.object({
 });
 
 export const zennTopicSchema = z.object({
+	name: z.string(),
 	display_name: z.string(),
 });
 

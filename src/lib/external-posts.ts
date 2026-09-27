@@ -1,7 +1,8 @@
+import { topicToSlug } from "@/lib/topics";
 import {
-	ExternalPostItem,
-	externalPostItemSchema,
 	qiitaResponseSchema,
+	RawExternalPostItem,
+	rawExternalPostItemSchema,
 	zennArticleDetailSchema,
 	zennArticlesResponseSchema,
 } from "@/types/post";
@@ -25,7 +26,9 @@ export function normalizeQiitaDate(createdAt: string): string {
 	return createdAt.replace(/\+09:00$/, "");
 }
 
-async function fetchZennTopics(slug: string): Promise<string[]> {
+async function fetchZennTopics(
+	slug: string
+): Promise<{ name: string; display_name: string }[]> {
 	try {
 		const res = await fetch(`https://zenn.dev/api/articles/${slug}`);
 		if (!res.ok) {
@@ -42,14 +45,17 @@ async function fetchZennTopics(slug: string): Promise<string[]> {
 			);
 			return [];
 		}
-		return validationResult.data.article.topics.map((t) => t.display_name);
+		return validationResult.data.article.topics.map((t) => ({
+			name: t.name,
+			display_name: t.display_name,
+		}));
 	} catch (error) {
 		console.warn(`[Zenn] Failed to fetch topics for ${slug}:`, error);
 		return [];
 	}
 }
 
-async function fetchZennPosts(): Promise<ExternalPostItem[]> {
+async function fetchZennPosts(): Promise<RawExternalPostItem[]> {
 	try {
 		const res = await fetch(
 			"https://zenn.dev/api/articles?username=yasuwotaku&order=latest"
@@ -64,18 +70,22 @@ async function fetchZennPosts(): Promise<ExternalPostItem[]> {
 		}
 
 		const rawArticles = validationResult.data.articles;
-		const items: ExternalPostItem[] = await Promise.all(
+		const items: RawExternalPostItem[] = await Promise.all(
 			rawArticles.map(async (rawItem) => {
 				const topics = await fetchZennTopics(rawItem.slug);
-				const candidate: ExternalPostItem = {
+				const candidate: RawExternalPostItem = {
 					kind: "external",
 					source: "zenn",
 					url: `https://zenn.dev${rawItem.path}`,
 					title: rawItem.title,
 					date: normalizeZennDate(rawItem.published_at),
-					tags: ["Zenn", ...topics],
+					category: "Zenn",
+					rawTopics: topics.map((t) => ({
+						slug: t.name,
+						label: t.display_name,
+					})),
 				};
-				const itemValidation = externalPostItemSchema.safeParse(candidate);
+				const itemValidation = rawExternalPostItemSchema.safeParse(candidate);
 				if (!itemValidation.success) {
 					throw new Error(
 						`Item validation failed: ${itemValidation.error.message}`
@@ -92,7 +102,7 @@ async function fetchZennPosts(): Promise<ExternalPostItem[]> {
 	}
 }
 
-async function fetchQiitaPosts(): Promise<ExternalPostItem[]> {
+async function fetchQiitaPosts(): Promise<RawExternalPostItem[]> {
 	try {
 		const res = await fetch(
 			"https://qiita.com/api/v2/users/yasuwotaku/items?per_page=100"
@@ -107,17 +117,21 @@ async function fetchQiitaPosts(): Promise<ExternalPostItem[]> {
 		}
 
 		const rawItems = validationResult.data;
-		const items: ExternalPostItem[] = [];
+		const items: RawExternalPostItem[] = [];
 		for (const rawItem of rawItems) {
-			const candidate: ExternalPostItem = {
+			const candidate: RawExternalPostItem = {
 				kind: "external",
 				source: "qiita",
 				url: rawItem.url,
 				title: rawItem.title,
 				date: normalizeQiitaDate(rawItem.created_at),
-				tags: ["Qiita", ...rawItem.tags.map((t) => t.name)],
+				category: "Qiita",
+				rawTopics: rawItem.tags.map((t) => ({
+					slug: topicToSlug(t.name),
+					label: t.name,
+				})),
 			};
-			const itemValidation = externalPostItemSchema.safeParse(candidate);
+			const itemValidation = rawExternalPostItemSchema.safeParse(candidate);
 			if (!itemValidation.success) {
 				throw new Error(
 					`Item validation failed: ${itemValidation.error.message}`
@@ -133,9 +147,9 @@ async function fetchQiitaPosts(): Promise<ExternalPostItem[]> {
 	}
 }
 
-let externalPostsPromise: Promise<ExternalPostItem[]> | null = null;
+let externalPostsPromise: Promise<RawExternalPostItem[]> | null = null;
 
-async function fetchAllExternalPosts(): Promise<ExternalPostItem[]> {
+async function fetchAllExternalPosts(): Promise<RawExternalPostItem[]> {
 	const [zennPosts, qiitaPosts] = await Promise.all([
 		fetchZennPosts(),
 		fetchQiitaPosts(),
@@ -143,7 +157,7 @@ async function fetchAllExternalPosts(): Promise<ExternalPostItem[]> {
 	return [...zennPosts, ...qiitaPosts];
 }
 
-export function getExternalPosts(): Promise<ExternalPostItem[]> {
+export function getExternalPosts(): Promise<RawExternalPostItem[]> {
 	if (!externalPostsPromise) {
 		externalPostsPromise = fetchAllExternalPosts();
 	}

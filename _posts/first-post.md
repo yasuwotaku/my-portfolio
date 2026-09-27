@@ -7,8 +7,11 @@ coverImage:
 date: "2025-03-09T21:29:07"
 ogImage:
     url: "/assets/blog/first-post/cover.jpg"
-tags:
-    - "Blog"
+category: "Blog"
+topics:
+    - "Next.js"
+    - "Tailwind CSS"
+    - "Firebase Hosting"
 ---
 
 継続的なアウトプットの習慣を作る手始めとして、ブログを作成しました。この投稿では、構成などについて軽く紹介していきます。

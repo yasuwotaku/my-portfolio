@@ -4,9 +4,18 @@ import { PostTitle } from "@/components/post/post-title";
 import { Tags } from "@/components/tag/tags";
 import { Post } from "@/types/post";
 
-type Props = Pick<Post, "title" | "coverImage" | "date" | "tags">;
+type Props = Pick<
+	Post,
+	"title" | "coverImage" | "date" | "category" | "topics"
+>;
 
-export function PostHeader({ title, coverImage, date, tags }: Props) {
+export function PostHeader({
+	title,
+	coverImage,
+	date,
+	category,
+	topics,
+}: Props) {
 	return (
 		<div className="mx-auto max-w-2xl">
 			<div className="text-sm font-bold">
@@ -14,7 +23,7 @@ export function PostHeader({ title, coverImage, date, tags }: Props) {
 			</div>
 			<PostTitle>{title}</PostTitle>
 			<div className="h-12 content-center">
-				<Tags tags={tags} />
+				<Tags category={category} topics={topics} />
 			</div>
 			{coverImage?.url && <CoverImage title={title} src={coverImage.url} />}
 		</div>

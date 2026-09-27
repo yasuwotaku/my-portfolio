@@ -25,7 +25,7 @@
 ## 構成
 
 - `_posts/*.md` — ブログ記事（front matter は `gray-matter`、本文は `zenn-markdown-html` で変換）
-- `src/app/` — ルーティング（`/`, `/about`, `/posts`, `/posts/[slug]`, `/tags`, `/tags/[tag]`）
+- `src/app/` — ルーティング（`/`, `/about`, `/posts`, `/posts/[slug]`, `/tags`, `/tags/[slug]`）
 - `src/components/layout/` — レイアウトコンポーネント
 - `src/components/post/` — 記事関連コンポーネント
 - `src/components/tag/` — タグ関連コンポーネント
@@ -33,7 +33,9 @@
 - `src/lib/external-posts.ts` — Zenn (API) / Qiita (API) からの外部記事取得（ビルド時に取得・検証）
 - `src/lib/markdown.ts` — Markdown → HTML
 - `src/lib/site.ts` — サイト共通定数
+- `src/lib/topics.ts` — カテゴリ・トピックの定義および slug 生成などの正規化処理
 - `src/types/post.ts` — Post 型・front matter の Zod スキーマ
+- 記事は 1 つのカテゴリ（Blog / Tech / Zenn / Qiita）と 0 個以上のトピック（技術・話題のタグ）を持つ
 
 ## デプロイ
 

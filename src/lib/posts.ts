@@ -1,10 +1,13 @@
 import { getExternalPosts } from "@/lib/external-posts";
+import { isCategorySlug, topicToSlug } from "@/lib/topics";
 import {
 	BlogPostItem,
 	ExternalPostItem,
 	FeedItem,
 	Post,
 	postFrontmatterSchema,
+	RawExternalPostItem,
+	Topic,
 } from "@/types/post";
 import fs from "fs";
 import matter from "gray-matter";
@@ -13,27 +16,24 @@ import { join } from "path";
 const postsDirectory = join(process.cwd(), "_posts");
 
 let cachedPosts: Post[] | null = null;
-let blogTagMap: Map<string, string> | null = null;
 
-function normalizeTags(
-	tags: string[],
-	canonicalMap: Map<string, string>
-): string[] {
-	const normalized: string[] = [];
-	for (const tag of tags) {
-		const cleaned = tag.replace(/\s+/g, "");
-		if (!cleaned) continue;
-		const lower = cleaned.toLowerCase();
-		let canonical = canonicalMap.get(lower);
-		if (!canonical) {
-			canonical = cleaned;
-			canonicalMap.set(lower, cleaned);
+// 同じ slug のトピックは最初に出てきた表記に揃える。
+// ブログ記事を外部記事より先に処理するので、ブログ記事の表記が優先される。
+const topicLabels = new Map<string, string>();
+
+function resolveTopics(rawTopics: { slug?: string; label: string }[]): Topic[] {
+	const topics: Topic[] = [];
+	for (const { slug: rawSlug, label } of rawTopics) {
+		const slug = topicToSlug(rawSlug ?? label);
+		if (!slug || isCategorySlug(slug) || topics.some((t) => t.slug === slug)) {
+			continue;
 		}
-		if (!normalized.includes(canonical)) {
-			normalized.push(canonical);
+		if (!topicLabels.has(slug)) {
+			topicLabels.set(slug, label);
 		}
+		topics.push({ slug, label: topicLabels.get(slug) ?? label });
 	}
-	return normalized;
+	return topics;
 }
 
 function loadAllPosts(): Post[] {
@@ -45,7 +45,7 @@ function loadAllPosts(): Post[] {
 		.readdirSync(postsDirectory)
 		.filter((file) => file.endsWith(".md"));
 
-	const posts = fileNames.map((fileName) => {
+	const posts: Post[] = fileNames.map((fileName) => {
 		const fullPath = join(postsDirectory, fileName);
 		const fileContents = fs.readFileSync(fullPath, "utf8");
 		const { data, content } = matter(fileContents);
@@ -57,21 +57,16 @@ function loadAllPosts(): Post[] {
 			);
 		}
 
-		const slug = fileName.replace(/\.md$/, "");
 		return {
 			...result.data,
-			slug,
+			topics: resolveTopics(result.data.topics.map((label) => ({ label }))),
+			slug: fileName.replace(/\.md$/, ""),
 			content,
 		};
 	});
 
 	// sort posts by date in descending order
 	posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
-
-	blogTagMap = new Map<string, string>();
-	for (const post of posts) {
-		post.tags = normalizeTags(post.tags, blogTagMap);
-	}
 
 	cachedPosts = posts;
 	return cachedPosts;
@@ -86,30 +81,33 @@ export function getPostBySlug(slug: string): Post | undefined {
 	return getAllPosts().find((post) => post.slug === realSlug);
 }
 
-export function getPostsByTag(tag: string): Post[] {
-	return getAllPosts().filter((post) => post.tags.includes(tag));
-}
-
 let feedItemsPromise: Promise<FeedItem[]> | null = null;
 
 async function fetchAndNormalizeFeedItems(): Promise<FeedItem[]> {
-	const blogPosts = getAllPosts().map(
+	const posts = getAllPosts();
+	const blogPosts: BlogPostItem[] = posts.map(
 		(post): BlogPostItem => ({
 			kind: "post",
 			slug: post.slug,
 			title: post.title,
 			date: post.date,
 			coverImage: post.coverImage,
-			tags: post.tags,
+			category: post.category,
+			topics: post.topics,
 		})
 	);
 
-	const externalPosts = await getExternalPosts();
-	const canonicalMap = new Map(blogTagMap ?? []);
-	const normalizedExternalPosts: ExternalPostItem[] = externalPosts.map(
+	const rawExternalPosts: RawExternalPostItem[] = await getExternalPosts();
+
+	const normalizedExternalPosts: ExternalPostItem[] = rawExternalPosts.map(
 		(item) => ({
-			...item,
-			tags: normalizeTags(item.tags, canonicalMap),
+			kind: "external",
+			source: item.source,
+			url: item.url,
+			title: item.title,
+			date: item.date,
+			category: item.category,
+			topics: resolveTopics(item.rawTopics),
 		})
 	);
 
@@ -128,26 +126,36 @@ export function getFeedItems(): Promise<FeedItem[]> {
 	return feedItemsPromise;
 }
 
-export async function getFeedItemsByTag(tag: string): Promise<FeedItem[]> {
+export async function getAllTopics(): Promise<Topic[]> {
 	const feedItems = await getFeedItems();
-	return feedItems.filter((item) => item.tags.includes(tag));
-}
+	const topicMap = new Map<string, Topic>();
 
-export async function getTagCounts(): Promise<{ tag: string; count: number }[]> {
-	const tagCountMap = new Map<string, number>();
-	const feedItems = await getFeedItems();
 	for (const item of feedItems) {
-		for (const tag of item.tags) {
-			tagCountMap.set(tag, (tagCountMap.get(tag) ?? 0) + 1);
+		for (const topic of item.topics) {
+			if (!topicMap.has(topic.slug)) {
+				topicMap.set(topic.slug, topic);
+			}
 		}
 	}
 
-	return Array.from(tagCountMap.entries())
-		.map(([tag, count]) => ({ tag, count }))
-		.sort((a, b) => a.tag.localeCompare(b.tag));
+	return Array.from(topicMap.values()).sort((a, b) =>
+		a.label.localeCompare(b.label)
+	);
 }
 
-export async function getAllTags(): Promise<string[]> {
-	const tagCounts = await getTagCounts();
-	return tagCounts.map((item) => item.tag);
+export async function getTopicBySlug(slug: string): Promise<Topic | undefined> {
+	const topics = await getAllTopics();
+	return topics.find((t) => t.slug === slug);
+}
+
+export async function getFeedItemsBySlug(slug: string): Promise<FeedItem[]> {
+	const feedItems = await getFeedItems();
+	if (isCategorySlug(slug)) {
+		return feedItems.filter(
+			(item) => item.category.toLowerCase() === slug.toLowerCase()
+		);
+	}
+	return feedItems.filter((item) =>
+		item.topics.some((topic) => topic.slug === slug)
+	);
 }
