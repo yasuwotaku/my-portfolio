@@ -1,4 +1,10 @@
-import { Post, postFrontmatterSchema } from "@/types/post";
+import { getExternalPosts } from "@/lib/external-posts";
+import {
+	BlogPostItem,
+	FeedItem,
+	Post,
+	postFrontmatterSchema,
+} from "@/types/post";
 import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
@@ -56,10 +62,37 @@ export function getPostsByTag(tag: string): Post[] {
 	return getAllPosts().filter((post) => post.tags.includes(tag));
 }
 
-export function getTagCounts(): { tag: string; count: number }[] {
+export async function getFeedItems(): Promise<FeedItem[]> {
+	const blogPosts = getAllPosts().map(
+		(post): BlogPostItem => ({
+			kind: "post",
+			slug: post.slug,
+			title: post.title,
+			date: post.date,
+			coverImage: post.coverImage,
+			tags: post.tags,
+		})
+	);
+
+	const externalPosts = await getExternalPosts();
+	const feedItems: FeedItem[] = [...blogPosts, ...externalPosts];
+
+	// sort all items by date in descending order
+	feedItems.sort((a, b) => (a.date > b.date ? -1 : 1));
+
+	return feedItems;
+}
+
+export async function getFeedItemsByTag(tag: string): Promise<FeedItem[]> {
+	const feedItems = await getFeedItems();
+	return feedItems.filter((item) => item.tags.includes(tag));
+}
+
+export async function getTagCounts(): Promise<{ tag: string; count: number }[]> {
 	const tagCountMap = new Map<string, number>();
-	for (const post of getAllPosts()) {
-		for (const tag of post.tags) {
+	const feedItems = await getFeedItems();
+	for (const item of feedItems) {
+		for (const tag of item.tags) {
 			tagCountMap.set(tag, (tagCountMap.get(tag) ?? 0) + 1);
 		}
 	}
@@ -69,6 +102,7 @@ export function getTagCounts(): { tag: string; count: number }[] {
 		.sort((a, b) => a.tag.localeCompare(b.tag));
 }
 
-export function getAllTags(): string[] {
-	return getTagCounts().map((item) => item.tag);
+export async function getAllTags(): Promise<string[]> {
+	const tagCounts = await getTagCounts();
+	return tagCounts.map((item) => item.tag);
 }

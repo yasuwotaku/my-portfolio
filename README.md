@@ -46,4 +46,4 @@ tags:
 ## デプロイ
 
 `output: "export"` により静的サイトとして `out/` に出力し、Firebase Hosting にデプロイ。
-GitHub Actions により、`main` への push で本番環境（live）、PR でプレビューチャンネルに自動デプロイされる。
+GitHub Actions により、`main` への push で本番環境（live）、PR でプレビューチャンネルに自動デプロイされる。Zenn や Qiita の記事はビルド時に取得するので、新しい記事を反映するときは Actions の「Deploy to Firebase Hosting on merge」を手動実行する（`gh workflow run firebase-hosting-merge.yml`）。

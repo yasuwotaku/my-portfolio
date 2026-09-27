@@ -20,3 +20,43 @@ export type Post = PostFrontmatter & {
 	slug: string;
 	content: string;
 };
+
+export type BlogPostItem = { kind: "post" } & Pick<
+	Post,
+	"slug" | "title" | "date" | "coverImage" | "tags"
+>;
+
+export const externalPostItemSchema = z.object({
+	kind: z.literal("external"),
+	source: z.enum(["zenn", "qiita"]),
+	url: z.url(),
+	title: z.string(),
+	date: z.iso.datetime({ local: true }),
+	tags: z.array(z.string()),
+});
+
+export type ExternalPostItem = z.infer<typeof externalPostItemSchema>;
+
+export type FeedItem = BlogPostItem | ExternalPostItem;
+
+export const zennRssItemSchema = z.object({
+	title: z.string(),
+	link: z.string(),
+	pubDate: z.string(),
+});
+
+export const zennRssSchema = z.object({
+	rss: z.object({
+		channel: z.object({
+			item: z.array(zennRssItemSchema).optional(),
+		}),
+	}),
+});
+
+export const qiitaItemSchema = z.object({
+	title: z.string(),
+	url: z.string(),
+	created_at: z.string(),
+});
+
+export const qiitaResponseSchema = z.array(qiitaItemSchema);

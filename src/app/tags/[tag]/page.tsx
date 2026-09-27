@@ -1,13 +1,13 @@
 import { Container } from "@/components/layout/container";
 import { Posts } from "@/components/post/posts";
 import { TagHeader } from "@/components/tag/tag-header";
-import { getAllTags, getPostsByTag } from "@/lib/posts";
+import { getAllTags, getFeedItemsByTag } from "@/lib/posts";
 
 export const dynamicParams = false;
 
 export default async function TaggedPosts(props: Params) {
 	const params = await props.params;
-	const posts = getPostsByTag(params.tag);
+	const posts = await getFeedItemsByTag(params.tag);
 
 	return (
 		<main>
@@ -26,9 +26,10 @@ type Params = {
 };
 
 export async function generateStaticParams() {
-	const tags = getAllTags();
+	const tags = await getAllTags();
 
 	return tags.map((tag) => ({
 		tag: tag,
 	}));
 }
+

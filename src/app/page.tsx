@@ -1,13 +1,14 @@
 import { Container } from "@/components/layout/container";
 import { Posts } from "@/components/post/posts";
-import { getAllPosts } from "@/lib/posts";
+import { getFeedItems } from "@/lib/posts";
 
-export default function Index() {
-	const allPosts = getAllPosts();
+export default async function Index() {
+	const feedItems = await getFeedItems();
 
 	return (
 		<main>
-			<Container>{allPosts.length > 0 && <Posts posts={allPosts} />}</Container>
+			<Container>{feedItems.length > 0 && <Posts posts={feedItems} />}</Container>
 		</main>
 	);
 }
+

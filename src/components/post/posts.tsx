@@ -1,25 +1,39 @@
+import { ExternalPostPreview } from "@/components/post/external-post-preview";
 import { PostPreview } from "@/components/post/post-preview";
-import { Post } from "@/types/post";
+import { FeedItem } from "@/types/post";
 
 type Props = {
-	posts: Post[];
+	posts: FeedItem[];
 };
 
 export function Posts({ posts }: Props) {
 	return (
 		<section>
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-				{posts.map((post) => (
-					<PostPreview
-						key={post.slug}
-						title={post.title}
-						coverImage={post.coverImage}
-						date={post.date}
-						slug={post.slug}
-						tags={post.tags}
-					/>
-				))}
+				{posts.map((item) =>
+					item.kind === "post" ? (
+						<PostPreview
+							key={item.slug}
+							title={item.title}
+							coverImage={item.coverImage}
+							date={item.date}
+							slug={item.slug}
+							tags={item.tags}
+						/>
+					) : (
+						<ExternalPostPreview
+							key={item.url}
+							kind={item.kind}
+							title={item.title}
+							url={item.url}
+							date={item.date}
+							source={item.source}
+							tags={item.tags}
+						/>
+					)
+				)}
 			</div>
 		</section>
 	);
 }
+
