@@ -6,7 +6,7 @@ import { Post } from "@/types/post";
 
 type Props = Pick<
 	Post,
-	"title" | "coverImage" | "date" | "category" | "topics"
+	"title" | "coverImage" | "date" | "category" | "topics" | "draft"
 >;
 
 export function PostHeader({
@@ -15,11 +15,17 @@ export function PostHeader({
 	date,
 	category,
 	topics,
+	draft,
 }: Props) {
 	return (
 		<div className="mx-auto max-w-2xl">
-			<div className="text-sm font-bold">
+			<div className="flex items-center gap-2 text-sm font-bold">
 				<DateFormatter dateString={date} />
+				{draft && (
+					<span className="rounded-full px-2 text-xs font-black tracking-wider uppercase outline outline-dashed">
+						Draft
+					</span>
+				)}
 			</div>
 			<PostTitle>{title}</PostTitle>
 			<div className="h-12 content-center">

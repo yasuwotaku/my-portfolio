@@ -20,6 +20,7 @@ export const postFrontmatterSchema = z.object({
 		url: z.string(),
 	}),
 	topics: z.array(z.string()).default([]),
+	draft: z.boolean().default(false),
 });
 
 export type PostFrontmatter = z.infer<typeof postFrontmatterSchema>;
@@ -33,7 +34,7 @@ export type Post = Omit<PostFrontmatter, "topics"> & {
 
 export type BlogPostItem = { kind: "post" } & Pick<
 	Post,
-	"slug" | "title" | "date" | "coverImage" | "category" | "topics"
+	"slug" | "title" | "date" | "coverImage" | "category" | "topics" | "draft"
 >;
 
 export type RawExternalTopic = {

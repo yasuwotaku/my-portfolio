@@ -25,6 +25,7 @@ pnpm typecheck # 型チェック（tsgo）
 ## 記事の追加
 
 `_posts/<slug>.md` を作成する。画像は `public/assets/blog/<slug>/` に配置。
+`draft: true` を指定した記事は本番ビルドから除外され、`pnpm dev` や PR のプレビュー環境でのみ表示されます。
 
 front matter 例:
 
@@ -40,6 +41,7 @@ ogImage:
   url: "/assets/blog/<slug>/cover.jpg"
 topics:
   - "Next.js"
+draft: false
 ---
 ```
 

@@ -37,6 +37,7 @@
 - `src/lib/topics.ts` — カテゴリ・トピックの定義および slug 生成などの正規化処理
 - `src/types/post.ts` — Post 型・front matter の Zod スキーマ
 - 記事は 1 つのカテゴリ（Blog / Zenn / Qiita。ブログ記事は常に Blog、外部記事は書いた場所）と 0 個以上のトピック（技術・話題のタグ。表示名は空白なし）を持つ
+- `draft: true` の記事は下書きとして扱い、本番ビルドから除外（`pnpm dev` または `SHOW_DRAFTS=true` で表示）
 
 ## デプロイ
 

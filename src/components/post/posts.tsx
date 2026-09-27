@@ -20,6 +20,7 @@ export function Posts({ posts }: Props) {
 							slug={item.slug}
 							category={item.category}
 							topics={item.topics}
+							draft={item.draft}
 						/>
 					) : (
 						<ExternalPostPreview

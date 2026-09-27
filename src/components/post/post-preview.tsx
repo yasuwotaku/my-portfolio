@@ -6,7 +6,7 @@ import Link from "next/link";
 
 type Props = Pick<
 	Post,
-	"title" | "coverImage" | "date" | "slug" | "category" | "topics"
+	"title" | "coverImage" | "date" | "slug" | "category" | "topics" | "draft"
 >;
 
 export function PostPreview({
@@ -16,6 +16,7 @@ export function PostPreview({
 	slug,
 	category,
 	topics,
+	draft,
 }: Props) {
 	return (
 		<div className="flex flex-col gap-1 p-4">
@@ -25,8 +26,13 @@ export function PostPreview({
 				src={coverImage.url}
 				alt={coverImage.alt}
 			/>
-			<div className="text-sm font-bold">
+			<div className="flex items-center gap-2 text-sm font-bold">
 				<DateFormatter dateString={date} />
+				{draft && (
+					<span className="rounded-full px-2 text-xs font-black tracking-wider uppercase outline outline-dashed">
+						Draft
+					</span>
+				)}
 			</div>
 			<Link
 				href={`/posts/${slug}`}

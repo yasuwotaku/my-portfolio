@@ -29,6 +29,7 @@ export default async function Post(props: Params) {
 						date={post.date}
 						category={post.category}
 						topics={post.topics}
+						draft={post.draft}
 					/>
 					<PostBody content={content} />
 				</article>
