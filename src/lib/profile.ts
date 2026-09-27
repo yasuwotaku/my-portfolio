@@ -20,6 +20,7 @@ export type HobbyPhoto = {
 };
 
 export type Hobby = {
+	items: string[];
 	description: string;
 	postLink: {
 		href: string;
@@ -40,10 +41,10 @@ export type Profile = {
 };
 
 export const PROFILE: Profile = {
-	name: "Takumi Yasuda",
+	name: "Takumi Yasuda / ヤスヲ",
 	handle: "yasuwotaku",
 	icon: "/assets/profile/icon.jpg",
-	bio: "千葉県南房総市出身、都内在住。Android アプリを作っています。",
+	bio: "千葉県南房総市出身、都内在住。Android アプリを作っています。この世のすべてに興味があります。",
 	links: [
 		{
 			service: "github",
@@ -67,56 +68,32 @@ export const PROFILE: Profile = {
 		},
 	],
 	timeline: [
-		{
-			period: "2013.4",
-			description: "木更津工業高等専門学校 情報工学科 入学",
-		},
-		{
-			period: "2018.3",
-			description: "木更津工業高等専門学校 情報工学科 卒業",
-		},
-		{
-			period: "2018.4",
-			description: "木更津工業高等専門学校 専攻科 制御・情報システム工学専攻 入学",
-		},
-		{
-			period: "2020.3",
-			description: "木更津工業高等専門学校 専攻科 制御・情報システム工学専攻 修了",
-		},
-		{
-			period: "2020.4",
-			description: "筑波大学大学院 システム情報工学研究群 サービス工学学位プログラム 入学",
-		},
-		{
-			period: "2022.3",
-			description: "筑波大学大学院 システム情報工学研究群 サービス工学学位プログラム 修了",
-		},
-		{
-			period: "2022.4",
-			description: "社会進出",
-		},
+		{ period: "2013", description: "木更津工業高等専門学校 情報工学科 入学" },
+		{ period: "2018", description: "同 専攻科 制御・情報システム工学専攻 入学" },
+		{ period: "2020", description: "筑波大学大学院 サービス工学学位プログラム 入学" },
+		{ period: "2022", description: "社会進出" },
 	],
 	skills: [
 		{
 			name: "Android",
-			skills: [
-				"Kotlin",
-				"Jetpack Compose",
-				"Coroutines / Flow",
-				"Android View",
-			],
+			skills: ["Kotlin", "Jetpack Compose", "Coroutines / Flow", "Android View"],
 		},
 		{
 			name: "Web",
 			skills: ["TypeScript", "Next.js", "Tailwind CSS"],
 		},
 		{
+			name: "Server",
+			skills: ["Go", "Python", "MySQL", "AWS"],
+		},
+		{
 			name: "Others",
-			skills: ["Python", "Go", "GitHub Actions", "BigQuery"],
+			skills: ["GitHub Actions", "BigQuery", "Google Apps Script"],
 		},
 	],
 	hobby: {
-		description: "カメラ。SONY α7C II と、7 年使っている RX10。",
+		items: ["カメラ", "映画", "読書", "アニメ", "漫画", "YouTube", "料理"],
+		description: "カメラは SONY α7C II と、7 年使っている RX10。",
 		postLink: {
 			href: "/posts/bought-a-camera",
 			label: "カメラを買った話",

@@ -55,7 +55,7 @@ export default function About() {
 							{PROFILE.timeline.map((item) => (
 								<li
 									key={`${item.period}-${item.description}`}
-									className="grid grid-cols-[4em_1fr] gap-x-2"
+									className="grid grid-cols-[3em_1fr] gap-x-2"
 								>
 									<span className="font-black tabular-nums">{item.period}</span>
 									<span>{item.description}</span>
@@ -97,6 +97,16 @@ export default function About() {
 							HOBBY
 						</h2>
 						<div className="mt-3 flex flex-col gap-3">
+							<div className="flex flex-wrap gap-1.5">
+								{PROFILE.hobby.items.map((item) => (
+									<span
+										key={item}
+										className="flex shrink-0 rounded-full bg-white px-2 py-0.5 text-sm font-black whitespace-nowrap outline"
+									>
+										{item}
+									</span>
+								))}
+							</div>
 							<p className="leading-relaxed">
 								{PROFILE.hobby.description}
 								<Link
