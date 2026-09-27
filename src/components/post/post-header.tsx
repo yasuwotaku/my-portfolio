@@ -1,17 +1,10 @@
-import CoverImage from "./cover-image";
-import DateFormatter from "./date-formatter";
-import { PostTitle } from "@/components/post-title";
-import { Tags } from "./tags";
+import { CoverImage } from "@/components/post/cover-image";
+import { DateFormatter } from "@/components/post/date-formatter";
+import { PostTitle } from "@/components/post/post-title";
+import { Tags } from "@/components/tag/tags";
+import { Post } from "@/types/post";
 
-type Props = {
-	title: string;
-	coverImage: {
-		url: string;
-		alt: string;
-	};
-	date: string;
-	tags: string[];
-};
+type Props = Pick<Post, "title" | "coverImage" | "date" | "tags">;
 
 export function PostHeader({ title, coverImage, date, tags }: Props) {
 	return (

@@ -1,5 +1,5 @@
-import { Post } from "@/interfaces/post";
-import { PostPreview } from "./post-preview";
+import { PostPreview } from "@/components/post/post-preview";
+import { Post } from "@/types/post";
 
 type Props = {
 	posts: Post[];
@@ -8,13 +8,7 @@ type Props = {
 export function Posts({ posts }: Props) {
 	return (
 		<section>
-			<div
-				className={`
-					grid grid-cols-1
-					lg:grid-cols-3
-					sm:grid-cols-2
-				`}
-			>
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
 				{posts.map((post) => (
 					<PostPreview
 						key={post.slug}

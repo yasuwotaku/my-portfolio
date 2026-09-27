@@ -1,10 +1,13 @@
+import { Container } from "@/components/layout/container";
+import { PostBody } from "@/components/post/post-body";
+import { PostHeader } from "@/components/post/post-header";
+import { markdownToHtml } from "@/lib/markdown";
+import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { SITE_NAME } from "@/lib/site";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllPosts, getPostBySlug } from "@/lib/api";
-import markdownToHtml from "@/lib/markdownToHtml";
-import Container from "@/components/container";
-import { PostBody } from "@/components/post-body";
-import { PostHeader } from "@/components/post-header";
+
+export const dynamicParams = false;
 
 export default async function Post(props: Params) {
 	const params = await props.params;
@@ -47,13 +50,13 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 		return notFound();
 	}
 
-	const title = `${post.title} | yasuworks.com`;
+	const title = `${post.title} | ${SITE_NAME}`;
 
 	return {
 		title,
 		openGraph: {
 			title,
-			images: [`https://yasuworks.com/${post.ogImage.url}`],
+			images: [post.ogImage.url],
 		},
 	};
 }

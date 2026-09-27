@@ -18,7 +18,8 @@
 		"react-dom": "^19.3.0",
 		"zenn-content-css": "^0.5.4",
 		"zenn-embed-elements": "^0.5.4",
-		"zenn-markdown-html": "^0.5.4"
+		"zenn-markdown-html": "^0.5.4",
+		"zod": "^4.6.5"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^2.1.1",

@@ -1,6 +1,6 @@
-import NavBar from "@/components/nav-bar";
-import Footer from "@/components/footer";
-import { SITE_NAME, SITE_DESCRIPTION, HOME_OG_IMAGE_URL } from "@/lib/constants";
+import { Footer } from "@/components/layout/footer";
+import { NavBar } from "@/components/layout/nav-bar";
+import { HOME_OG_IMAGE_PATH, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
@@ -11,10 +11,11 @@ import "@/styles/globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+	metadataBase: new URL(SITE_URL),
 	title: SITE_NAME,
 	description: SITE_DESCRIPTION,
 	openGraph: {
-		images: [HOME_OG_IMAGE_URL],
+		images: [HOME_OG_IMAGE_PATH],
 	},
 };
 
@@ -30,7 +31,7 @@ export default function RootLayout({
 				<link rel="icon" href="/favicon.ico" sizes="32x32" />
 				<script async src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
 			</head>
-			<body className={cn(inter.className, `flex min-h-screen flex-col`)}>
+			<body className={cn(inter.className, "flex min-h-screen flex-col")}>
 				<NavBar />
 				<div className="flex-auto">{children}</div>
 				<Footer />

@@ -1,6 +1,6 @@
-import Container from "@/components/container";
+import { Container } from "@/components/layout/container";
 
-export default async function Index(props: Params) {
+export default function Index() {
 	return (
 		<main>
 			<Container>
@@ -9,9 +9,3 @@ export default async function Index(props: Params) {
 		</main>
 	);
 }
-
-type Params = {
-	params: Promise<{
-		tag: string;
-	}>;
-};

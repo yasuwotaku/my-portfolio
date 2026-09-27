@@ -12,10 +12,7 @@ export function Tags({ tags }: Props) {
 				<Link
 					key={tag}
 					href={`/tags/${tag}`}
-					className={`
-						m-1 flex flex-row rounded-full bg-white px-1 text-sm font-black outline transition-colors
-						hover:bg-gray-300
-					`}
+					className="m-1 flex flex-row rounded-full bg-white px-1 text-sm font-black outline transition-colors hover:bg-gray-300"
 				>
 					<Hashtag className="w-3.5" />
 					{tag}

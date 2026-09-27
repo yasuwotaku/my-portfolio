@@ -8,10 +8,17 @@ const eslintConfig = defineConfig([
   ...fixupConfigRules([...nextVitals, ...nextTs]),
   tailwind.configs.recommended,
   {
+    plugins: {
+      tailwindcss: tailwind,
+    },
     settings: {
       tailwindcss: {
         cssConfigPath: "./src/styles/globals.css",
       },
+    },
+    rules: {
+      // zenn-content-css が提供するクラス
+      "tailwindcss/no-custom-classname": ["warn", { whitelist: ["znc"] }],
     },
   },
   globalIgnores([
