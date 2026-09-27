@@ -27,7 +27,6 @@ export function Posts({ posts }: Props) {
 							title={item.title}
 							url={item.url}
 							date={item.date}
-							image={item.image}
 							source={item.source}
 							tags={item.tags}
 						/>

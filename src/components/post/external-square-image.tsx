@@ -1,30 +1,13 @@
-import Image from "next/image";
+import cn from "classnames";
+import { ServiceLogo } from "@/components/post/service-logo";
 
 type Props = {
 	title: string;
 	url: string;
-	src?: string;
 	source: "zenn" | "qiita";
 };
 
-export function ExternalSquareImage({ title, url, src, source }: Props) {
-	const sourceLabel = source === "zenn" ? "Zenn" : "Qiita";
-	const image = src ? (
-		<div className="relative size-full bg-gray-200">
-			<Image
-				fill
-				src={src}
-				alt={`Cover Image for ${title}`}
-				className="object-contain"
-				unoptimized
-			/>
-		</div>
-	) : (
-		<div className="flex size-full items-center justify-center bg-gray-200 text-5xl text-gray-500">
-			<span className="break-all">{sourceLabel}</span>
-		</div>
-	);
-
+export function ExternalSquareImage({ title, url, source }: Props) {
 	return (
 		<div className="relative aspect-square w-full drop-shadow grayscale transition-all duration-300 hover:grayscale-0">
 			<a
@@ -32,8 +15,16 @@ export function ExternalSquareImage({ title, url, src, source }: Props) {
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label={title}
+				className="block size-full"
 			>
-				{image}
+				<div
+					className={cn("flex size-full items-center justify-center", {
+						"bg-[#EAF5FF] text-[#3EA8FF]": source === "zenn",
+						"bg-[#EEF9E6] text-[#55C500]": source === "qiita",
+					})}
+				>
+					<ServiceLogo source={source} className="size-[38%]" />
+				</div>
 			</a>
 		</div>
 	);

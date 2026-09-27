@@ -32,7 +32,6 @@ export const externalPostItemSchema = z.object({
 	url: z.url(),
 	title: z.string(),
 	date: z.iso.datetime({ local: true }),
-	image: z.string().optional(),
 	tags: z.array(z.string()),
 });
 
@@ -44,11 +43,6 @@ export const zennRssItemSchema = z.object({
 	title: z.string(),
 	link: z.string(),
 	pubDate: z.string(),
-	enclosure: z
-		.object({
-			url: z.string().optional(),
-		})
-		.optional(),
 });
 
 export const zennRssSchema = z.object({

@@ -22,30 +22,6 @@ export function normalizeQiitaDate(createdAt: string): string {
 	return createdAt.replace(/\+09:00$/, "");
 }
 
-function extractOgImage(html: string): string | undefined {
-	const match =
-		html.match(
-			/<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i
-		) ||
-		html.match(
-			/<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:image["']/i
-		);
-	return match ? match[1].replaceAll("&amp;", "&") : undefined;
-}
-
-async function fetchQiitaOgImage(url: string): Promise<string | undefined> {
-	try {
-		const res = await fetch(url);
-		if (!res.ok) {
-			return undefined;
-		}
-		const html = await res.text();
-		return extractOgImage(html);
-	} catch {
-		return undefined;
-	}
-}
-
 async function fetchZennPosts(): Promise<ExternalPostItem[]> {
 	try {
 		const res = await fetch("https://zenn.dev/yasuwotaku/feed");
@@ -74,7 +50,6 @@ async function fetchZennPosts(): Promise<ExternalPostItem[]> {
 				url: rawItem.link,
 				title: rawItem.title,
 				date: normalizeZennDate(rawItem.pubDate),
-				image: rawItem.enclosure?.url || undefined,
 				tags: ["Zenn"],
 			};
 			const itemValidation = externalPostItemSchema.safeParse(candidate);
@@ -108,20 +83,14 @@ async function fetchQiitaPosts(): Promise<ExternalPostItem[]> {
 		}
 
 		const rawItems = validationResult.data;
-		const ogImages = await Promise.all(
-			rawItems.map((item) => fetchQiitaOgImage(item.url))
-		);
-
 		const items: ExternalPostItem[] = [];
-		for (let i = 0; i < rawItems.length; i++) {
-			const rawItem = rawItems[i];
+		for (const rawItem of rawItems) {
 			const candidate: ExternalPostItem = {
 				kind: "external",
 				source: "qiita",
 				url: rawItem.url,
 				title: rawItem.title,
 				date: normalizeQiitaDate(rawItem.created_at),
-				image: ogImages[i] || undefined,
 				tags: ["Qiita"],
 			};
 			const itemValidation = externalPostItemSchema.safeParse(candidate);

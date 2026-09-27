@@ -8,7 +8,6 @@ export function ExternalPostPreview({
 	title,
 	url,
 	date,
-	image,
 	source,
 	tags,
 }: ExternalPostItem) {
@@ -17,7 +16,6 @@ export function ExternalPostPreview({
 			<ExternalSquareImage
 				title={title}
 				url={url}
-				src={image}
 				source={source}
 			/>
 			<div className="text-sm font-bold">
