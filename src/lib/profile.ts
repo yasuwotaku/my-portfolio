@@ -20,13 +20,13 @@ export type HobbyPhoto = {
 };
 
 export type Hobby = {
-	items: string[];
-	description: string;
-	postLink: {
+	name: string;
+	description?: string;
+	link?: {
 		href: string;
 		label: string;
 	};
-	photos: HobbyPhoto[];
+	photos?: HobbyPhoto[];
 };
 
 export type Profile = {
@@ -37,7 +37,7 @@ export type Profile = {
 	links: ProfileLink[];
 	timeline: TimelineItem[];
 	skills: SkillGroup[];
-	hobby: Hobby;
+	hobbies: Hobby[];
 };
 
 export const PROFILE: Profile = {
@@ -91,26 +91,22 @@ export const PROFILE: Profile = {
 			skills: ["GitHub Actions", "BigQuery", "Google Apps Script"],
 		},
 	],
-	hobby: {
-		items: ["カメラ", "映画", "読書", "アニメ", "漫画", "YouTube", "料理"],
-		description: "カメラは SONY α7C II と、7 年使っている RX10。",
-		postLink: {
-			href: "/posts/bought-a-camera",
-			label: "カメラを買った話",
+	hobbies: [
+		{
+			name: "カメラ",
+			description: "SONY α7C II と、7 年使っている RX10。",
+			link: { href: "/posts/bought-a-camera", label: "カメラを買った話" },
+			photos: [
+				{ src: "/assets/album/DSC00001.JPG", alt: "DSC00001" },
+				{ src: "/assets/album/DSC00007.JPG", alt: "DSC00007" },
+				{ src: "/assets/album/DSC00009.JPG", alt: "DSC00009" },
+			],
 		},
-		photos: [
-			{
-				src: "/assets/album/DSC00001.JPG",
-				alt: "DSC00001",
-			},
-			{
-				src: "/assets/album/DSC00007.JPG",
-				alt: "DSC00007",
-			},
-			{
-				src: "/assets/album/DSC00009.JPG",
-				alt: "DSC00009",
-			},
-		],
-	},
+		{ name: "映画" },
+		{ name: "読書" },
+		{ name: "アニメ" },
+		{ name: "漫画" },
+		{ name: "YouTube" },
+		{ name: "料理" },
+	],
 };

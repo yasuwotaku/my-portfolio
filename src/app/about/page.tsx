@@ -1,10 +1,10 @@
+import { HobbyList } from "@/components/about/hobby-list";
 import { ServiceIcon } from "@/components/icon/service-icon";
 import { Container } from "@/components/layout/container";
 import { PROFILE } from "@/lib/profile";
 import { SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 
 export const metadata: Metadata = {
 	title: `About | ${SITE_NAME}`,
@@ -96,42 +96,8 @@ export default function About() {
 						<h2 className="mt-6 text-sm font-black tracking-widest uppercase">
 							HOBBY
 						</h2>
-						<div className="mt-3 flex flex-col gap-3">
-							<div className="flex flex-wrap gap-1.5">
-								{PROFILE.hobby.items.map((item) => (
-									<span
-										key={item}
-										className="flex shrink-0 rounded-full bg-white px-2 py-0.5 text-sm font-black whitespace-nowrap outline"
-									>
-										{item}
-									</span>
-								))}
-							</div>
-							<p className="leading-relaxed">
-								{PROFILE.hobby.description}
-								<Link
-									href={PROFILE.hobby.postLink.href}
-									className="ml-1.5 underline underline-offset-2 transition-colors hover:text-gray-600"
-								>
-									{PROFILE.hobby.postLink.label}
-								</Link>
-							</p>
-							<div className="grid grid-cols-3 gap-2">
-								{PROFILE.hobby.photos.map((photo) => (
-									<div
-										key={photo.src}
-										className="relative aspect-square w-full drop-shadow grayscale transition-all duration-300 hover:grayscale-0"
-									>
-										<Image
-											src={photo.src}
-											alt={photo.alt}
-											fill
-											sizes="(max-width: 672px) 33vw, 214px"
-											className="object-cover"
-										/>
-									</div>
-								))}
-							</div>
+						<div className="mt-3">
+							<HobbyList hobbies={PROFILE.hobbies} />
 						</div>
 					</section>
 				</div>
