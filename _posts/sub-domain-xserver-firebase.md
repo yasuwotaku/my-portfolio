@@ -7,9 +7,8 @@ coverImage:
 date: "2025-03-15T22:29:07"
 ogImage:
     url: "/assets/album/DSC02616.JPG"
-category: "Tech"
 topics:
-    - "Firebase Hosting"
+    - "FirebaseHosting"
     - "XServer"
     - "DNS"
 ---

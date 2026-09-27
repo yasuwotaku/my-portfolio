@@ -23,7 +23,9 @@ const topicLabels = new Map<string, string>();
 
 function resolveTopics(rawTopics: { slug?: string; label: string }[]): Topic[] {
 	const topics: Topic[] = [];
-	for (const { slug: rawSlug, label } of rawTopics) {
+	for (const { slug: rawSlug, label: rawLabel } of rawTopics) {
+		// 表示をコンパクトにし、空白の有無による表記ゆれを吸収する
+		const label = rawLabel.replace(/\s+/g, "");
 		const slug = topicToSlug(rawSlug ?? label);
 		if (!slug || isCategorySlug(slug) || topics.some((t) => t.slug === slug)) {
 			continue;
@@ -59,6 +61,7 @@ function loadAllPosts(): Post[] {
 
 		return {
 			...result.data,
+			category: "Blog",
 			topics: resolveTopics(result.data.topics.map((label) => ({ label }))),
 			slug: fileName.replace(/\.md$/, ""),
 			content,

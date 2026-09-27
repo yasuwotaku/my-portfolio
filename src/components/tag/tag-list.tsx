@@ -6,7 +6,6 @@ import Link from "next/link";
 
 const CATEGORY_ITEMS: { name: Category; slug: CategorySlug }[] = [
 	{ name: "Blog", slug: "blog" },
-	{ name: "Tech", slug: "tech" },
 	{ name: "Zenn", slug: "zenn" },
 	{ name: "Qiita", slug: "qiita" },
 ];
@@ -28,7 +27,7 @@ export function TagList({ topics, currentSlug }: Props) {
 				<Link
 					href="/tags"
 					className={cn(
-						"m-1 flex flex-row rounded-full px-2 text-base font-black outline transition-colors",
+						"m-1 flex shrink-0 flex-row rounded-full px-2 text-base font-black whitespace-nowrap outline transition-colors",
 						isAllSelected ? "bg-black text-white" : "bg-white hover:bg-gray-300"
 					)}
 					aria-current={isAllSelected ? "page" : undefined}
@@ -42,7 +41,7 @@ export function TagList({ topics, currentSlug }: Props) {
 							key={item.slug}
 							href={`/tags/${item.slug}`}
 							className={cn(
-								"m-1 flex flex-row rounded-full px-2 text-base font-black outline transition-colors",
+								"m-1 flex shrink-0 flex-row rounded-full px-2 text-base font-black whitespace-nowrap outline transition-colors",
 								isCurrent ? "bg-black text-white" : "bg-white hover:bg-gray-300"
 							)}
 							aria-current={isCurrent ? "page" : undefined}
@@ -60,7 +59,7 @@ export function TagList({ topics, currentSlug }: Props) {
 							key={topic.slug}
 							href={`/tags/${topic.slug}`}
 							className={cn(
-								"m-1 flex flex-row rounded-full px-1 text-sm font-black outline transition-colors",
+								"m-1 flex shrink-0 flex-row rounded-full px-1 text-sm font-black whitespace-nowrap outline transition-colors",
 								isCurrent ? "bg-black text-white" : "bg-white hover:bg-gray-300"
 							)}
 							aria-current={isCurrent ? "page" : undefined}

@@ -2,12 +2,11 @@ import { Category } from "@/types/post";
 
 export const CATEGORY_NAMES: readonly Category[] = [
 	"Blog",
-	"Tech",
 	"Zenn",
 	"Qiita",
 ] as const;
 
-export const CATEGORY_SLUGS = ["blog", "tech", "zenn", "qiita"] as const;
+export const CATEGORY_SLUGS = ["blog", "zenn", "qiita"] as const;
 export type CategorySlug = (typeof CATEGORY_SLUGS)[number];
 
 export function isCategorySlug(slug: string): slug is CategorySlug {

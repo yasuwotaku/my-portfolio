@@ -35,7 +35,7 @@
 - `src/lib/site.ts` — サイト共通定数
 - `src/lib/topics.ts` — カテゴリ・トピックの定義および slug 生成などの正規化処理
 - `src/types/post.ts` — Post 型・front matter の Zod スキーマ
-- 記事は 1 つのカテゴリ（Blog / Tech / Zenn / Qiita）と 0 個以上のトピック（技術・話題のタグ）を持つ
+- 記事は 1 つのカテゴリ（Blog / Zenn / Qiita。ブログ記事は常に Blog、外部記事は書いた場所）と 0 個以上のトピック（技術・話題のタグ。表示名は空白なし）を持つ
 
 ## デプロイ
 

@@ -1,10 +1,7 @@
 import { z } from "zod";
 
-export const CATEGORY_NAMES = ["Blog", "Tech", "Zenn", "Qiita"] as const;
+export const CATEGORY_NAMES = ["Blog", "Zenn", "Qiita"] as const;
 export type Category = (typeof CATEGORY_NAMES)[number];
-
-export const BLOG_CATEGORIES = ["Blog", "Tech"] as const;
-export type BlogCategory = (typeof BLOG_CATEGORIES)[number];
 
 export type Topic = {
 	slug: string;
@@ -22,13 +19,13 @@ export const postFrontmatterSchema = z.object({
 	ogImage: z.object({
 		url: z.string(),
 	}),
-	category: z.enum(BLOG_CATEGORIES),
 	topics: z.array(z.string()).default([]),
 });
 
 export type PostFrontmatter = z.infer<typeof postFrontmatterSchema>;
 
 export type Post = Omit<PostFrontmatter, "topics"> & {
+	category: "Blog";
 	slug: string;
 	content: string;
 	topics: Topic[];
