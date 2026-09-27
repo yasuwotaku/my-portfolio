@@ -152,34 +152,6 @@ export async function getAllTopics(): Promise<Topic[]> {
 	);
 }
 
-export async function getTopicBySlug(slug: string): Promise<Topic | undefined> {
-	const topics = await getAllTopics();
-	return topics.find((t) => t.slug === slug);
-}
-
-export async function getFeedItemsBySlug(slug: string): Promise<FeedItem[]> {
-	const feedItems = await getFeedItems();
-	if (isCategorySlug(slug)) {
-		return feedItems.filter(
-			(item) => item.category.toLowerCase() === slug.toLowerCase()
-		);
-	}
-	return feedItems.filter((item) =>
-		item.topics.some((topic) => topic.slug === slug)
-	);
-}
-
-export async function getFeedItemsByCategoryAndTopic(
-	categorySlug: CategorySlug,
-	topicSlug: string
-): Promise<FeedItem[]> {
-	const feedItems = await getFeedItems();
-	return feedItems.filter(
-		(item) =>
-			categoryToSlug(item.category) === categorySlug &&
-			item.topics.some((topic) => topic.slug === topicSlug)
-	);
-}
 
 export async function getCategoryTopicSlugs(): Promise<
 	Record<CategorySlug, string[]>

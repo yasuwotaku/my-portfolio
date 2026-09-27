@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.has-filter [data-posts-fallback] {
+	visibility: hidden;
+}

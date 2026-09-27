@@ -3,6 +3,10 @@
 		"public": "out",
 		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
 		"cleanUrls": true,
+		"redirects": [
+			{ "source": "/tags", "destination": "/posts", "type": 301 },
+			{ "source": "/tags/**", "destination": "/posts", "type": 301 }
+		],
 		"rewrites": [
 			{
 				"source": "/**",
