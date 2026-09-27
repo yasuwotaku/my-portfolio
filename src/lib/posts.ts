@@ -21,6 +21,9 @@ import { join } from "path";
 
 const postsDirectory = join(process.cwd(), "_posts");
 
+const showDrafts =
+	process.env.NODE_ENV === "development" || process.env.SHOW_DRAFTS === "true";
+
 let cachedPosts: Post[] | null = null;
 
 // 同じ slug のトピックは最初に出てきた表記に揃える。
@@ -53,26 +56,28 @@ function loadAllPosts(): Post[] {
 		.readdirSync(postsDirectory)
 		.filter((file) => file.endsWith(".md"));
 
-	const posts: Post[] = fileNames.map((fileName) => {
-		const fullPath = join(postsDirectory, fileName);
-		const fileContents = fs.readFileSync(fullPath, "utf8");
-		const { data, content } = matter(fileContents);
-		const result = postFrontmatterSchema.safeParse(data);
+	const posts: Post[] = fileNames
+		.map((fileName) => {
+			const fullPath = join(postsDirectory, fileName);
+			const fileContents = fs.readFileSync(fullPath, "utf8");
+			const { data, content } = matter(fileContents);
+			const result = postFrontmatterSchema.safeParse(data);
 
-		if (!result.success) {
-			throw new Error(
-				`Failed to validate front matter in "${fileName}": ${result.error.message}`
-			);
-		}
+			if (!result.success) {
+				throw new Error(
+					`Failed to validate front matter in "${fileName}": ${result.error.message}`
+				);
+			}
 
-		return {
-			...result.data,
-			category: "Blog",
-			topics: resolveTopics(result.data.topics.map((label) => ({ label }))),
-			slug: fileName.replace(/\.md$/, ""),
-			content,
-		};
-	});
+			return {
+				...result.data,
+				category: "Blog" as const,
+				topics: resolveTopics(result.data.topics.map((label) => ({ label }))),
+				slug: fileName.replace(/\.md$/, ""),
+				content,
+			};
+		})
+		.filter((post) => showDrafts || !post.draft);
 
 	// sort posts by date in descending order
 	posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
@@ -103,6 +108,7 @@ async function fetchAndNormalizeFeedItems(): Promise<FeedItem[]> {
 			coverImage: post.coverImage,
 			category: post.category,
 			topics: post.topics,
+			draft: post.draft,
 		})
 	);
 
