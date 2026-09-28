@@ -17,7 +17,7 @@ export default async function Index() {
 					item.slug === featuredPost.slug
 				)
 		)
-		.slice(0, 5);
+		.slice(0, 6);
 
 	return (
 		<main>
