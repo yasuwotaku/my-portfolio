@@ -95,6 +95,10 @@ export function getPostBySlug(slug: string): Post | undefined {
 	return getAllPosts().find((post) => post.slug === realSlug);
 }
 
+export function getFeaturedPost(): Post | undefined {
+	return getAllPosts().find((post) => post.featured);
+}
+
 let feedItemsPromise: Promise<FeedItem[]> | null = null;
 
 async function fetchAndNormalizeFeedItems(): Promise<FeedItem[]> {

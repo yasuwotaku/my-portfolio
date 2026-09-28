@@ -21,6 +21,7 @@ export const postFrontmatterSchema = z.object({
 	}),
 	topics: z.array(z.string()).default([]),
 	draft: z.boolean().default(false),
+	featured: z.boolean().default(false),
 });
 
 export type PostFrontmatter = z.infer<typeof postFrontmatterSchema>;
