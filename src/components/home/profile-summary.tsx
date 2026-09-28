@@ -16,7 +16,7 @@ export function ProfileSummary() {
 				/>
 				<div className="flex flex-col gap-1.5">
 					<div className="text-lg font-black">{PROFILE.name}</div>
-					<p className="text-sm leading-relaxed text-gray-700">{PROFILE.bio}</p>
+					<p className="text-sm font-light text-gray-500">{PROFILE.handle}</p>
 					<ProfileLinks links={PROFILE.links} />
 				</div>
 				<Link
