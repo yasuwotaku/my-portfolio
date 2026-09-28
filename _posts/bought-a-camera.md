@@ -10,6 +10,7 @@ ogImage:
 topics:
     - "Camera"
     - "SONY"
+featured: true
 ---
 
 大きな額の買い物をしました。
