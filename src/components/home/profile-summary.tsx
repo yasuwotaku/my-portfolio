@@ -15,8 +15,10 @@ export function ProfileSummary() {
 					className="size-[72px] rounded-full bg-white object-cover outline"
 				/>
 				<div className="flex flex-col gap-1.5">
-					<div className="text-lg font-black">{PROFILE.name}</div>
-					<p className="text-sm font-light text-gray-500">{PROFILE.handle}</p>
+					<div>
+						<div className="text-lg font-black">{PROFILE.name}</div>
+						<p className="text-sm font-light text-gray-500">{PROFILE.handle}</p>
+					</div>
 					<ProfileLinks links={PROFILE.links} />
 				</div>
 				<Link
