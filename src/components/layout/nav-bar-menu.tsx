@@ -33,9 +33,10 @@ export function NavBarMenu() {
 				<li key={`menu-item-${i}`} className="relative text-sm">
 					<Link
 						href={`/${item.segment == "#" ? "" : item.segment}`}
-						className={cn("group inline-block rounded px-4 py-2 text-lg", {
+						className={cn("group inline-block rounded px-4 py-2 text-lg focus:outline-none focus-visible:outline-2 focus-visible:outline-black", {
 							"font-bold": item.isActive,
 						})}
+						aria-current={item.isActive ? "page" : undefined}
 					>
 						{item.label}
 
