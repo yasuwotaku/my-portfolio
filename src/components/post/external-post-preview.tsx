@@ -29,7 +29,8 @@ export function ExternalPostPreview({
 				className="line-clamp-2 h-12 hover:underline"
 			>
 				<span>{title}</span>
-				<OpenNewWindow className="ml-1 inline-block size-3.5 shrink-0 align-[-0.125em]" />
+				<OpenNewWindow aria-hidden="true" className="ml-1 inline-block size-3.5 shrink-0 align-[-0.125em]" />
+				<span className="sr-only">（新しいタブで開く）</span>
 			</a>
 			<Tags category={category} topics={topics} />
 		</div>

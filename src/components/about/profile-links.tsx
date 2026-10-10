@@ -20,6 +20,7 @@ export function ProfileLinks({ links, className }: Props) {
 				>
 					<ServiceIcon service={link.service} className="size-3.5" />
 					<span>{link.label}</span>
+					<span className="sr-only">（新しいタブで開く）</span>
 				</a>
 			))}
 		</div>

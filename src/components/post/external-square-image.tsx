@@ -14,7 +14,7 @@ export function ExternalSquareImage({ title, url, source }: Props) {
 				href={url}
 				target="_blank"
 				rel="noopener noreferrer"
-				aria-label={title}
+				aria-label={`${title}（新しいタブで開く）`}
 				className="block size-full"
 			>
 				<div
