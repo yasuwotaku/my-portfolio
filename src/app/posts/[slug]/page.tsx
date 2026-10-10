@@ -54,10 +54,25 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 
 	const title = `${post.title} | ${SITE_NAME}`;
 
+	const url = `/posts/${post.slug}`;
+
 	return {
 		title,
+		description: post.excerpt,
+		alternates: {
+			canonical: url,
+		},
 		openGraph: {
 			title,
+			description: post.excerpt,
+			type: "article",
+			url,
+			images: [post.ogImage.url],
+		},
+		twitter: {
+			card: "summary_large_image",
+			title,
+			description: post.excerpt,
 			images: [post.ogImage.url],
 		},
 	};
