@@ -50,6 +50,9 @@ export function PostsExplorer({ posts, topics, categoryTopicSlugs }: Props) {
 
 	return (
 		<div>
+			<div aria-live="polite" aria-atomic="true" className="sr-only">
+				{filteredPosts.length}件の記事が見つかりました
+			</div>
 			<TagList
 				topics={topics}
 				categoryTopicSlugs={categoryTopicSlugs}
