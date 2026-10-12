@@ -3,7 +3,8 @@ import { PostBody } from "@/components/post/post-body";
 import { PostHeader } from "@/components/post/post-header";
 import { markdownToHtml } from "@/lib/markdown";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
-import { SITE_NAME } from "@/lib/site";
+import { PROFILE } from "@/lib/profile";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -19,8 +20,26 @@ export default async function Post(props: Params) {
 
 	const content = await markdownToHtml(post.content || "");
 
+	const jsonLd = {
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		headline: post.title,
+		description: post.excerpt,
+		image: [`${SITE_URL}${post.ogImage.url}`],
+		datePublished: new Date(post.date).toISOString(),
+		author: {
+			"@type": "Person",
+			name: PROFILE.name,
+			url: SITE_URL,
+		},
+	};
+
 	return (
 		<main>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+			/>
 			<Container>
 				<article className="mb-32">
 					<PostHeader
