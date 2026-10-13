@@ -22,14 +22,15 @@ export function NavBar() {
 				<Logo />
 				<div className="w-10 sm:hidden"></div>
 			</div>
-			<div
+			<nav
+				aria-label="メイン"
 				className={cn(
 					"w-full place-items-center justify-center sm:flex sm:flex-auto sm:justify-end",
 					isMenuOpen ? "block" : "hidden"
 				)}
 			>
 				<NavBarMenu />
-			</div>
+			</nav>
 		</header>
 	);
 }
