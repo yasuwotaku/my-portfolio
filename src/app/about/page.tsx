@@ -2,12 +2,18 @@ import { HobbyList } from "@/components/about/hobby-list";
 import { ProfileLinks } from "@/components/about/profile-links";
 import { Container } from "@/components/layout/container";
 import { PROFILE } from "@/lib/profile";
-import { SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-	title: `About | ${SITE_NAME}`,
+	title: "About",
+	description: "yasuwotakuのプロフィールやスキル、趣味などを紹介します。",
+	alternates: {
+		canonical: "/about",
+	},
+	openGraph: {
+		url: "/about",
+	},
 };
 
 export default function About() {
