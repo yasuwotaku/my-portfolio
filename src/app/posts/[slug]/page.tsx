@@ -4,7 +4,7 @@ import { PostHeader } from "@/components/post/post-header";
 import { markdownToHtml } from "@/lib/markdown";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { PROFILE } from "@/lib/profile";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/site";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -73,7 +73,7 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 		return notFound();
 	}
 
-	const title = `${post.title} | ${SITE_NAME}`;
+	const title = post.title;
 
 	const url = `/posts/${post.slug}`;
 

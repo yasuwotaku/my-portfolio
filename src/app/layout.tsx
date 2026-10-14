@@ -12,9 +12,33 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	metadataBase: new URL(SITE_URL),
-	title: SITE_NAME,
+	title: {
+		default: SITE_NAME,
+		template: `%s | ${SITE_NAME}`,
+	},
 	description: SITE_DESCRIPTION,
+	alternates: {
+		canonical: "/",
+	},
 	openGraph: {
+		title: {
+			default: SITE_NAME,
+			template: `%s | ${SITE_NAME}`,
+		},
+		description: SITE_DESCRIPTION,
+		url: "/",
+		siteName: SITE_NAME,
+		locale: "ja_JP",
+		type: "website",
+		images: [HOME_OG_IMAGE_PATH],
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: {
+			default: SITE_NAME,
+			template: `%s | ${SITE_NAME}`,
+		},
+		description: SITE_DESCRIPTION,
 		images: [HOME_OG_IMAGE_PATH],
 	},
 };
