@@ -2,6 +2,7 @@ import { HobbyList } from "@/components/about/hobby-list";
 import { ProfileLinks } from "@/components/about/profile-links";
 import { Container } from "@/components/layout/container";
 import { PROFILE } from "@/lib/profile";
+import { SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -17,8 +18,22 @@ export const metadata: Metadata = {
 };
 
 export default function About() {
+	const jsonLd = {
+		"@context": "https://schema.org",
+		"@type": "Person",
+		name: PROFILE.name,
+		url: SITE_URL,
+		image: `${SITE_URL}${PROFILE.icon}`,
+		description: PROFILE.bio,
+		sameAs: PROFILE.links.map((link) => link.url),
+	};
+
 	return (
 		<main>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+			/>
 			<Container>
 				<div className="mx-auto flex max-w-2xl flex-col gap-4 py-8">
 					<section className="flex flex-col items-center gap-3 text-center">
