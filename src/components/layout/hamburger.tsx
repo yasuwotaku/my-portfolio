@@ -8,6 +8,7 @@ type Props = {
 export function HamburgerMenu({ isOpen, toggleMenu }: Props) {
 	return (
 		<button
+			id="hamburger-menu-button"
 			className="relative size-10 rounded text-gray-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-black"
 			onClick={toggleMenu}
 			aria-expanded={isOpen}
