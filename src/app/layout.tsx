@@ -17,16 +17,7 @@ export const metadata: Metadata = {
 		template: `%s | ${SITE_NAME}`,
 	},
 	description: SITE_DESCRIPTION,
-	alternates: {
-		canonical: "/",
-	},
 	openGraph: {
-		title: {
-			default: SITE_NAME,
-			template: `%s | ${SITE_NAME}`,
-		},
-		description: SITE_DESCRIPTION,
-		url: "/",
 		siteName: SITE_NAME,
 		locale: "ja_JP",
 		type: "website",
@@ -34,11 +25,6 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: {
-			default: SITE_NAME,
-			template: `%s | ${SITE_NAME}`,
-		},
-		description: SITE_DESCRIPTION,
 		images: [HOME_OG_IMAGE_PATH],
 	},
 };
