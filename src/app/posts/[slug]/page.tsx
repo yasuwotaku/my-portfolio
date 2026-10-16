@@ -42,6 +42,7 @@ export default async function Post(props: Params) {
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
+			<script async src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
 			<Container>
 				<article className="mb-32">
 					<PostHeader

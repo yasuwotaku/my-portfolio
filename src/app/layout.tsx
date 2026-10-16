@@ -39,7 +39,6 @@ export default function RootLayout({
 			<head>
 				<link rel="icon" href="/icon.svg" type="image/svg+xml" />
 				<link rel="icon" href="/favicon.ico" sizes="32x32" />
-				<script async src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
 				{/* /posts をフィルタ付きで開いたとき、絞り込み前の全記事が一瞬見えるのを防ぐ */}
 				<script
 					dangerouslySetInnerHTML={{
