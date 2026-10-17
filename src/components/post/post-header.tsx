@@ -31,7 +31,7 @@ export function PostHeader({
 			<div className="h-12 content-center">
 				<Tags category={category} topics={topics} />
 			</div>
-			{coverImage?.url && <CoverImage title={title} src={coverImage.url} />}
+			{coverImage?.url && <CoverImage title={title} src={coverImage.url} alt={coverImage.alt} />}
 		</div>
 	);
 }
