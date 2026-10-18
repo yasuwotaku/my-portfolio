@@ -17,7 +17,7 @@ export function HeroPost({ post }: Props) {
 						fill
 						priority
 						src={post.coverImage.url}
-						alt={post.coverImage.alt || `Cover Image for ${post.title}`}
+						alt={post.coverImage.alt || ""}
 						sizes="(min-width: 768px) 60vw, 100vw"
 						className="object-cover"
 					/>
