@@ -12,7 +12,7 @@ export function CoverImage({ title, src, slug }: Props) {
 	const image = (
 		<Image
 			src={src}
-			alt={`Cover Image for ${title}`}
+			alt=""
 			className={cn("w-full drop-shadow", {
 				"transition-shadow duration-200": slug,
 			})}

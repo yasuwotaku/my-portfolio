@@ -14,7 +14,7 @@ export function SquareImage({ title, src, alt, slug }: Props) {
 		<Image
 			fill
 			src={src}
-			alt={`Cover Image for ${title}`}
+			alt={alt || ""}
 			className={cn("object-cover", {
 				"transition-shadow duration-200": slug,
 			})}
