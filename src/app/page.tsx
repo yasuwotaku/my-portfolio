@@ -3,6 +3,25 @@ import { LatestPosts } from "@/components/home/latest-posts";
 import { ProfileSummary } from "@/components/home/profile-summary";
 import { Container } from "@/components/layout/container";
 import { getFeaturedPost, getFeedItems } from "@/lib/posts";
+import type { Metadata } from "next";
+import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
+
+export const metadata: Metadata = {
+	title: SITE_NAME,
+	description: SITE_DESCRIPTION,
+	alternates: {
+		canonical: "/",
+	},
+	openGraph: {
+		title: SITE_NAME,
+		description: SITE_DESCRIPTION,
+		url: "/",
+	},
+	twitter: {
+		title: SITE_NAME,
+		description: SITE_DESCRIPTION,
+	},
+};
 
 export default async function Index() {
 	const featuredPost = getFeaturedPost();
