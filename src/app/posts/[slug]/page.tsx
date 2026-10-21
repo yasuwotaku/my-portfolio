@@ -6,6 +6,7 @@ import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { PROFILE } from "@/lib/profile";
 import { SITE_URL } from "@/lib/site";
 import { Metadata } from "next";
+import Script from "next/script";
 import { notFound } from "next/navigation";
 
 export const dynamicParams = false;
@@ -38,6 +39,7 @@ export default async function Post(props: Params) {
 
 	return (
 		<main>
+			<Script src="https://embed.zenn.studio/js/listen-embed-event.js" />
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
