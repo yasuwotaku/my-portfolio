@@ -2,7 +2,19 @@ import { HeroPost } from "@/components/home/hero-post";
 import { LatestPosts } from "@/components/home/latest-posts";
 import { ProfileSummary } from "@/components/home/profile-summary";
 import { Container } from "@/components/layout/container";
+import { DEFAULT_OPEN_GRAPH } from "@/lib/metadata";
 import { getFeaturedPost, getFeedItems } from "@/lib/posts";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	alternates: {
+		canonical: "/",
+	},
+	openGraph: {
+		...DEFAULT_OPEN_GRAPH,
+		url: "/",
+	},
+};
 
 export default async function Index() {
 	const featuredPost = getFeaturedPost();

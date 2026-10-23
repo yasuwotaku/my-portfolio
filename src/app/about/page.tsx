@@ -1,6 +1,7 @@
 import { HobbyList } from "@/components/about/hobby-list";
 import { ProfileLinks } from "@/components/about/profile-links";
 import { Container } from "@/components/layout/container";
+import { DEFAULT_OPEN_GRAPH } from "@/lib/metadata";
 import { PROFILE } from "@/lib/profile";
 import { SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 		canonical: "/about",
 	},
 	openGraph: {
+		...DEFAULT_OPEN_GRAPH,
 		url: "/about",
 	},
 };

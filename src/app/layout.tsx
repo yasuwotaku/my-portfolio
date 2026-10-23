@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/footer";
 import { NavBar } from "@/components/layout/nav-bar";
-import { HOME_OG_IMAGE_PATH, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { DEFAULT_OPEN_GRAPH, DEFAULT_TWITTER } from "@/lib/metadata";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
@@ -17,16 +18,8 @@ export const metadata: Metadata = {
 		template: `%s | ${SITE_NAME}`,
 	},
 	description: SITE_DESCRIPTION,
-	openGraph: {
-		siteName: SITE_NAME,
-		locale: "ja_JP",
-		type: "website",
-		images: [HOME_OG_IMAGE_PATH],
-	},
-	twitter: {
-		card: "summary_large_image",
-		images: [HOME_OG_IMAGE_PATH],
-	},
+	openGraph: DEFAULT_OPEN_GRAPH,
+	twitter: DEFAULT_TWITTER,
 };
 
 export default function RootLayout({
