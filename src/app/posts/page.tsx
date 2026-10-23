@@ -2,6 +2,7 @@ import { Container } from "@/components/layout/container";
 import { Posts } from "@/components/post/posts";
 import { PostsExplorer } from "@/components/post/posts-explorer";
 import { TagList } from "@/components/tag/tag-list";
+import { DEFAULT_OPEN_GRAPH } from "@/lib/metadata";
 import { getAllTopics, getCategoryTopicSlugs, getFeedItems } from "@/lib/posts";
 import type { Metadata } from "next";
 import { Suspense } from "react";
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 		canonical: "/posts",
 	},
 	openGraph: {
+		...DEFAULT_OPEN_GRAPH,
 		url: "/posts",
 	},
 };

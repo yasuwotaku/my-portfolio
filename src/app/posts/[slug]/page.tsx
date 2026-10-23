@@ -2,6 +2,7 @@ import { Container } from "@/components/layout/container";
 import { PostBody } from "@/components/post/post-body";
 import { PostHeader } from "@/components/post/post-header";
 import { markdownToHtml } from "@/lib/markdown";
+import { DEFAULT_OPEN_GRAPH, DEFAULT_TWITTER } from "@/lib/metadata";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { PROFILE } from "@/lib/profile";
 import { SITE_URL } from "@/lib/site";
@@ -86,6 +87,7 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 			canonical: url,
 		},
 		openGraph: {
+			...DEFAULT_OPEN_GRAPH,
 			title,
 			description: post.excerpt,
 			type: "article",
@@ -93,7 +95,7 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 			images: [post.ogImage.url],
 		},
 		twitter: {
-			card: "summary_large_image",
+			...DEFAULT_TWITTER,
 			title,
 			description: post.excerpt,
 			images: [post.ogImage.url],
