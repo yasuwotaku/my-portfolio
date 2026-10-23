@@ -28,6 +28,7 @@ export default async function PostsPage() {
 
 	return (
 		<main>
+			<h1 className="sr-only">記事一覧</h1>
 			<Container>
 				<Suspense
 					fallback={
