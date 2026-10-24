@@ -33,6 +33,7 @@ export default async function Index() {
 
 	return (
 		<main>
+			<h1 className="sr-only">ホーム</h1>
 			<Container>
 				{featuredPost && <HeroPost post={featuredPost} />}
 				{latestPosts.length > 0 && <LatestPosts posts={latestPosts} />}
