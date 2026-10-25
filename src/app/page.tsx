@@ -4,6 +4,7 @@ import { ProfileSummary } from "@/components/home/profile-summary";
 import { Container } from "@/components/layout/container";
 import { DEFAULT_OPEN_GRAPH } from "@/lib/metadata";
 import { getFeaturedPost, getFeedItems } from "@/lib/posts";
+import { SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default async function Index() {
 
 	return (
 		<main>
+			<h1 className="sr-only">{SITE_NAME}</h1>
 			<Container>
 				{featuredPost && <HeroPost post={featuredPost} />}
 				{latestPosts.length > 0 && <LatestPosts posts={latestPosts} />}

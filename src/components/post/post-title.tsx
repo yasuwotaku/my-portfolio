@@ -5,5 +5,5 @@ type Props = {
 };
 
 export function PostTitle({ children }: Props) {
-	return <h2 className="text-3xl">{children}</h2>;
+	return <h1 className="text-3xl">{children}</h1>;
 }
