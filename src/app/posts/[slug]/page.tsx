@@ -22,11 +22,19 @@ export default async function Post(props: Params) {
 
 	const content = await markdownToHtml(post.content || "");
 
+	const description =
+		post.excerpt ||
+		(post.content || "")
+			.replace(/[\n\r]+/g, " ")
+			.replace(/[#*`_\[\]()]/g, "")
+			.trim()
+			.slice(0, 120) + "…";
+
 	const jsonLd = {
 		"@context": "https://schema.org",
 		"@type": "BlogPosting",
 		headline: post.title,
-		description: post.excerpt,
+		description: description,
 		image: [`${SITE_URL}${post.ogImage.url}`],
 		datePublished: new Date(post.date).toISOString(),
 		author: [
@@ -77,19 +85,26 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 	}
 
 	const title = post.title;
+	const description =
+		post.excerpt ||
+		(post.content || "")
+			.replace(/[\n\r]+/g, " ")
+			.replace(/[#*`_\[\]()]/g, "")
+			.trim()
+			.slice(0, 120) + "…";
 
 	const url = `/posts/${post.slug}`;
 
 	return {
 		title,
-		description: post.excerpt,
+		description,
 		alternates: {
 			canonical: url,
 		},
 		openGraph: {
 			...DEFAULT_OPEN_GRAPH,
 			title,
-			description: post.excerpt,
+			description,
 			type: "article",
 			url,
 			images: [post.ogImage.url],
@@ -97,7 +112,7 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 		twitter: {
 			...DEFAULT_TWITTER,
 			title,
-			description: post.excerpt,
+			description,
 			images: [post.ogImage.url],
 		},
 	};
