@@ -41,7 +41,7 @@ export default function About() {
 					<section className="flex flex-col items-center gap-3 text-center">
 						<Image
 							src={PROFILE.icon}
-							alt={PROFILE.name}
+							alt=""
 							width={96}
 							height={96}
 							priority

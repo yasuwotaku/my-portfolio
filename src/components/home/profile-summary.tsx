@@ -9,7 +9,7 @@ export function ProfileSummary() {
 			<div className="grid grid-cols-[auto_1fr] items-center gap-4 sm:grid-cols-[auto_1fr_auto]">
 				<Image
 					src={PROFILE.icon}
-					alt={PROFILE.name}
+					alt=""
 					width={72}
 					height={72}
 					className="size-[72px] rounded-full bg-white object-cover outline"
