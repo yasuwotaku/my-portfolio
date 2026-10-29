@@ -22,11 +22,23 @@ export default async function Post(props: Params) {
 
 	const content = await markdownToHtml(post.content || "");
 
+	const fallbackDescription = post.content
+		? post.content
+				.replace(/```[\s\S]*?```/g, "")
+				.replace(/<[^>]+>/g, "")
+				.replace(/!?\[([^\]]*)\]\([^)]+\)/g, "$1")
+				.replace(/[#*`_~>\-+|]/g, "")
+				.replace(/\s+/g, " ")
+				.trim()
+				.slice(0, 120) + "…"
+		: "";
+	const description = post.excerpt || fallbackDescription;
+
 	const jsonLd = {
 		"@context": "https://schema.org",
 		"@type": "BlogPosting",
 		headline: post.title,
-		description: post.excerpt,
+		description,
 		image: [`${SITE_URL}${post.ogImage.url}`],
 		datePublished: new Date(post.date).toISOString(),
 		author: [
@@ -80,16 +92,28 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 
 	const url = `/posts/${post.slug}`;
 
+	const fallbackDescription = post.content
+		? post.content
+				.replace(/```[\s\S]*?```/g, "")
+				.replace(/<[^>]+>/g, "")
+				.replace(/!?\[([^\]]*)\]\([^)]+\)/g, "$1")
+				.replace(/[#*`_~>\-+|]/g, "")
+				.replace(/\s+/g, " ")
+				.trim()
+				.slice(0, 120) + "…"
+		: "";
+	const description = post.excerpt || fallbackDescription;
+
 	return {
 		title,
-		description: post.excerpt,
+		description,
 		alternates: {
 			canonical: url,
 		},
 		openGraph: {
 			...DEFAULT_OPEN_GRAPH,
 			title,
-			description: post.excerpt,
+			description,
 			type: "article",
 			url,
 			images: [post.ogImage.url],
@@ -97,7 +121,7 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 		twitter: {
 			...DEFAULT_TWITTER,
 			title,
-			description: post.excerpt,
+			description,
 			images: [post.ogImage.url],
 		},
 	};
