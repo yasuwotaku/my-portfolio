@@ -2,7 +2,7 @@
 
 import { Posts } from "@/components/post/posts";
 import { TagList } from "@/components/tag/tag-list";
-import { CategorySlug, categoryToSlug, isCategorySlug } from "@/lib/topics";
+import { CategorySlug, categoryToSlug, isCategorySlug, slugToCategory } from "@/lib/topics";
 import { FeedItem, Topic } from "@/types/post";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
@@ -51,7 +51,7 @@ export function PostsExplorer({ posts, topics, categoryTopicSlugs }: Props) {
 	return (
 		<div>
 			<div aria-live="polite" className="sr-only">
-				{`${filteredPosts.length}件の記事を表示しています`}
+				{`${currentCategory ? slugToCategory(currentCategory) : "すべて"}のカテゴリー、${currentTopic ? (topics.find((t) => t.slug === currentTopic)?.label ?? "すべて") : "すべて"}のトピックから、${filteredPosts.length}件の記事を表示しています`}
 			</div>
 			<TagList
 				topics={topics}

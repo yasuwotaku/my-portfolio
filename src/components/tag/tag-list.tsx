@@ -40,12 +40,12 @@ export function TagList({
 					href={postsPath(undefined, currentTopic)}
 					scroll={false}
 					className={cn(
-						"m-1 flex shrink-0 flex-row rounded-full px-2 text-base font-black whitespace-nowrap outline transition-colors",
+						"m-1 flex shrink-0 flex-row rounded-full px-2 text-base font-black whitespace-nowrap outline transition-colors focus-visible:outline-[3px] focus-visible:outline-black",
 						isAllSelected
 							? "bg-black text-white outline-black"
 							: "bg-gray-200 outline-gray-200 hover:bg-gray-300 hover:outline-gray-300"
 					)}
-					aria-current={isAllSelected ? "page" : undefined}
+					aria-current={isAllSelected ? "true" : undefined}
 				>
 					All
 				</Link>
@@ -66,12 +66,12 @@ export function TagList({
 							href={href}
 							scroll={false}
 							className={cn(
-								"m-1 flex shrink-0 flex-row rounded-full px-2 text-base font-black whitespace-nowrap outline transition-colors",
+								"m-1 flex shrink-0 flex-row rounded-full px-2 text-base font-black whitespace-nowrap outline transition-colors focus-visible:outline-[3px] focus-visible:outline-black",
 								isCurrent
 									? "bg-black text-white outline-black"
 									: "bg-gray-200 outline-gray-200 hover:bg-gray-300 hover:outline-gray-300"
 							)}
-							aria-current={isCurrent ? "page" : undefined}
+							aria-current={isCurrent ? "true" : undefined}
 						>
 							{item.name}
 						</Link>
@@ -91,12 +91,12 @@ export function TagList({
 							href={href}
 							scroll={false}
 							className={cn(
-								"m-1 flex shrink-0 flex-row rounded-full px-1 text-sm font-black whitespace-nowrap outline transition-colors",
+								"m-1 flex shrink-0 flex-row rounded-full px-1 text-sm font-black whitespace-nowrap outline transition-colors focus-visible:outline-[3px] focus-visible:outline-black",
 								isCurrent
 									? "bg-black text-white outline-black"
 									: "bg-white hover:bg-gray-300"
 							)}
-							aria-current={isCurrent ? "page" : undefined}
+							aria-current={isCurrent ? "true" : undefined}
 						>
 							<Hashtag className="w-3.5" />
 							{topic.label}
