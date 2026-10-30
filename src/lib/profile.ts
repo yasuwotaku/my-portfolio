@@ -97,9 +97,9 @@ export const PROFILE: Profile = {
 			description: "SONY α7C II と、7 年使っている RX10。",
 			link: { href: "/posts/bought-a-camera", label: "カメラを買った話" },
 			photos: [
-				{ src: "/assets/album/DSC00001.JPG", alt: "DSC00001" },
-				{ src: "/assets/album/DSC00007.JPG", alt: "DSC00007" },
-				{ src: "/assets/album/DSC00009.JPG", alt: "DSC00009" },
+				{ src: "/assets/album/DSC00001.JPG", alt: "" },
+				{ src: "/assets/album/DSC00007.JPG", alt: "" },
+				{ src: "/assets/album/DSC00009.JPG", alt: "" },
 			],
 		},
 		{
