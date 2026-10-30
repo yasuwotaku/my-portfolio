@@ -12,6 +12,18 @@ import { notFound } from "next/navigation";
 
 export const dynamicParams = false;
 
+function getFallbackExcerpt(content: string): string {
+	const plainText = content
+		.replace(/```[\s\S]*?```/g, "")
+		.replace(/<[^>]*>?/g, "")
+		.replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
+		.replace(/[#*`!]/g, "")
+		.replace(/https?:\/\/[^\s]+/g, "")
+		.replace(/\s+/g, " ")
+		.trim();
+	return plainText.length > 120 ? plainText.slice(0, 120) + "…" : plainText;
+}
+
 export default async function Post(props: Params) {
 	const params = await props.params;
 	const post = getPostBySlug(params.slug);
@@ -26,7 +38,7 @@ export default async function Post(props: Params) {
 		"@context": "https://schema.org",
 		"@type": "BlogPosting",
 		headline: post.title,
-		description: post.excerpt,
+		description: post.excerpt || getFallbackExcerpt(post.content),
 		image: [`${SITE_URL}${post.ogImage.url}`],
 		datePublished: new Date(post.date).toISOString(),
 		author: [
@@ -80,16 +92,18 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 
 	const url = `/posts/${post.slug}`;
 
+	const description = post.excerpt || getFallbackExcerpt(post.content);
+
 	return {
 		title,
-		description: post.excerpt,
+		description,
 		alternates: {
 			canonical: url,
 		},
 		openGraph: {
 			...DEFAULT_OPEN_GRAPH,
 			title,
-			description: post.excerpt,
+			description,
 			type: "article",
 			url,
 			images: [post.ogImage.url],
@@ -97,7 +111,7 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 		twitter: {
 			...DEFAULT_TWITTER,
 			title,
-			description: post.excerpt,
+			description,
 			images: [post.ogImage.url],
 		},
 	};
