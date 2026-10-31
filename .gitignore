@@ -31,8 +31,8 @@ pnpm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# firabase
-.firebase
+# cloudflare
+.wrangler
 
 # vscode
 .vscode

@@ -9,7 +9,7 @@ yasuwotaku の個人サイト兼ブログ（ https://yasuworks.com ）のソー�
 - TypeScript
 - Tailwind CSS v4
 - zenn-markdown-html / gray-matter
-- Firebase Hosting
+- Cloudflare Workers (static assets)
 - pnpm
 
 ## 開発コマンド
@@ -49,5 +49,7 @@ featured: false
 
 ## デプロイ
 
-`output: "export"` により静的サイトとして `out/` に出力し、Firebase Hosting にデプロイ。
-GitHub Actions により、`main` への push で本番環境（live）、PR でプレビューチャンネルに自動デプロイされる。Zenn や Qiita の記事はビルド時に取得するので、新しい記事を反映するときは Actions の「Deploy to Firebase Hosting on merge」を手動実行する（`gh workflow run firebase-hosting-merge.yml`）。
+`output: "export"` により静的サイトとして `out/` に出力し、Cloudflare Workers (static assets) にデプロイ。
+GitHub Actions により、`main` への push で本番環境、PR でプレビュー URL（`pr-<番号>` エイリアス。PR にコメントされ、失効しない）に自動デプロイされる。Zenn や Qiita の記事はビルド時に取得するので、新しい記事を反映するときは Actions の「Deploy」を手動実行する（`gh workflow run deploy.yml`）。
+
+デプロイには GitHub Secrets に `CLOUDFLARE_API_TOKEN` と `CLOUDFLARE_ACCOUNT_ID` の設定が必要です。
