@@ -6,7 +6,7 @@
 
 - Next.js 16 (App Router) / React 19 / TypeScript
 - Tailwind CSS v4 (`@tailwindcss/postcss`)
-- `output: "export"` の静的サイト → `out/` を Firebase Hosting にデプロイ
+- `output: "export"` の静的サイト → `out/` を Cloudflare Workers (static assets) にデプロイ
 - パッケージマネージャ: pnpm。npm / yarn は使わない
   - pnpm の `minimumReleaseAge`（公開から 1 日未満のバージョンは入れない）はサプライチェーン対策なので、除外設定を足して回避しない
 
@@ -42,8 +42,8 @@
 
 ## デプロイ
 
-- `main` への push で GitHub Actions が Firebase Hosting (live) にデプロイ
-- PR ではプレビューチャンネルにデプロイ
+- `main` への push で GitHub Actions が Cloudflare Workers に本番デプロイ
+- PR ではプレビュー URL（`pr-<番号>` エイリアス。PR にコメントされ、失効しない）にデプロイ
 - 静的エクスポートなので、サーバー機能（API Routes、動的 SSR、`next/image` 最適化など）は使えない
 
 ## 作業の進め方（Claude 向け）
@@ -52,4 +52,4 @@
 
 - 確認は `pnpm build` / `pnpm lint` / `pnpm typecheck` の 3 つ
 - コミットの type は Conventional Commits の `feat` / `fix` / `refactor` / `docs` / `style` / `chore` に加え、記事の追加は `post`
-- PR を作る・push するたびに Firebase のプレビューチャンネルにデプロイされる（URL は PR にコメントされ、7 日で失効）。見た目の確認はそこで行う
+- PR を作る・push するたびに Cloudflare Workers のプレビュー環境にデプロイされる（URL は PR にコメントされ、失効しない）。見た目の確認はそこで行う

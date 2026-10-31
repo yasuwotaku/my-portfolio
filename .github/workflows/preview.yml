@@ -1,0 +1,70 @@
+name: Preview
+on: pull_request
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Build
+        run: pnpm install --frozen-lockfile && pnpm build
+        env:
+          SHOW_DRAFTS: "true"
+      - name: Upload preview version
+        id: upload
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -o pipefail
+          output=$(pnpm exec wrangler versions upload --preview-alias "pr-${{ github.event.pull_request.number }}")
+          echo "$output"
+          alias_url=$(echo "$output" | grep "Version Preview Alias URL:" | grep -oE "https://[^ ]+" | head -n 1)
+          preview_url=$(echo "$output" | grep "Version Preview URL:" | grep -oE "https://[^ ]+" | head -n 1)
+          target_url="${alias_url:-$preview_url}"
+          if [ -z "$target_url" ]; then
+            echo "Error: Could not extract preview URL from wrangler output" >&2
+            exit 1
+          fi
+          echo "preview_url=$target_url" >> "$GITHUB_OUTPUT"
+      - name: Comment PR with Preview URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const previewUrl = '${{ steps.upload.outputs.preview_url }}';
+            const marker = '<!-- cloudflare-preview -->';
+            const body = `${marker}\n### 🚀 Cloudflare Workers Preview\n\n- **Preview URL:** ${previewUrl}`;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existingComment = comments.find(comment => comment.body && comment.body.includes(marker));
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
